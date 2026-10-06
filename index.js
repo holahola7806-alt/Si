@@ -10,7 +10,7 @@ const client = new Client({
   ]
 });
 
-// ✅ Cambiado a 'clientReady' para evitar el warning
+// ✅ Corregido: 'clientReady' en lugar de 'ready'
 client.on('clientReady', () => {
   console.log(`✅ Conectado como: ${client.user.tag}`);
 });
@@ -18,9 +18,11 @@ client.on('clientReady', () => {
 client.on('messageCreate', async message => {
   if (!message.guild || message.author.bot) return;
 
+  // Comando !xd - repite el mensaje 50 veces
   if (message.content.trim() === `${PREFIX}xd`) {
     const mensaje = '🔰 CREW SG ON TOP PERRAS 🔥';
     const repetido = Array(50).fill(mensaje).join('\n');
+    
     await message.reply(repetido);
   }
 });
