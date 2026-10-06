@@ -1,4 +1,5 @@
 const { Client, GatewayIntentBits } = require('discord.js');
+require('dotenv').config();
 
 const PREFIX = process.env.PREFIX || '!';
 
@@ -10,20 +11,20 @@ const client = new Client({
   ]
 });
 
-// ✅ Corregido: 'clientReady' en lugar de 'ready'
-client.on('clientReady', () => {
+client.on('ready', () => {
   console.log(`✅ Conectado como: ${client.user.tag}`);
 });
 
 client.on('messageCreate', async message => {
   if (!message.guild || message.author.bot) return;
 
-  // Comando !xd - repite el mensaje 50 veces
   if (message.content.trim() === `${PREFIX}xd`) {
-    const mensaje = '🔰 CREW SG ON TOP PERRAS 🔥';
-    const repetido = Array(50).fill(mensaje).join('\n');
-    
-    await message.reply(repetido);
+    await message.reply(`
+🔰 CREW SG ON TOP PERRAS 🔥
+💪 NADIE NOS IGUALA
+👑 SIEMPRE ENCIMA
+🔥 CREW SG SIEMPRE
+    `);
   }
 });
 
