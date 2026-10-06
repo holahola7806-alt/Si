@@ -10,11 +10,12 @@ const client = new Client({
 });
 
 client.on('ready', () => {
-  console.log(`✅ CONECTADO: ${client.user.tag}`);
+  console.log('✅ BOT LISTO — Escribe !xd para probar');
 });
 
-client.on('messageCreate', async message => {
-  if (!message.guild || message.author.bot) return;
+client.on('messageCreate', async (message) => {
+  if (!message.guild) return;
+  if (message.author.bot) return;
 
   if (message.content === '!xd') {
     await message.reply('🔰 CREW SG ON TOP PERRAS 🔥');
