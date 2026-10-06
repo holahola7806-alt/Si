@@ -1,8 +1,6 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 require('dotenv').config();
 
-const PREFIX = process.env.PREFIX || '!';
-
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,
@@ -12,23 +10,15 @@ const client = new Client({
 });
 
 client.on('ready', () => {
-  console.log(`✅ Conectado como: ${client.user.tag}`);
+  console.log(`✅ CONECTADO: ${client.user.tag}`);
 });
 
 client.on('messageCreate', async message => {
   if (!message.guild || message.author.bot) return;
 
-  if (message.content.trim() === `${PREFIX}xd`) {
-    await message.reply(`
-🔰 CREW SG ON TOP PERRAS 🔥
-💪 NADIE NOS IGUALA
-👑 SIEMPRE ENCIMA
-🔥 CREW SG SIEMPRE
-    `);
+  if (message.content === '!xd') {
+    await message.reply('🔰 CREW SG ON TOP PERRAS 🔥');
   }
 });
-
-client.on('error', console.error);
-process.on('unhandledRejection', console.error);
 
 client.login(process.env.TOKEN);
