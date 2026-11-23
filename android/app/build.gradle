@@ -1,0 +1,17 @@
+plugins { id "com.android.application" }
+android {
+    namespace "com.kaxtz.cartulinastudio"
+    compileSdk 35
+    defaultConfig {
+        applicationId "com.kaxtz.cartulinastudio"
+        minSdk 26
+        targetSdk 34
+        versionCode 3
+        versionName "3.0"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    packaging { resources { excludes += ["META-INF/DEPENDENCIES"] } }
+}

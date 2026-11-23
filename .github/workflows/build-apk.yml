@@ -1,0 +1,44 @@
+name: Build Android APK
+on:
+  push:
+    branches: [cartulina-studio]
+    paths:
+      - 'android/**'
+      - 'index.html'
+      - '.github/workflows/build-apk.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10.2'
+      - name: Put latest web editor inside APK
+        run: |
+          mkdir -p android/app/src/main/assets
+          cp index.html android/app/src/main/assets/index.html
+      - name: Compile Android APK
+        run: gradle -p android --no-daemon assembleDebug
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cartulina-Studio-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+      - name: Make APK available to download
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete cartulina-studio-v3 --yes --cleanup-tag || true
+          gh release create cartulina-studio-v3 android/app/build/outputs/apk/debug/app-debug.apk#Cartulina-Studio.apk --title "Cartulina Studio APK v3" --notes "Aplicación Android offline de Cartulina Studio; APK de prueba firmado para instalación manual." --target "$GITHUB_SHA"
+        continue-on-error: true
