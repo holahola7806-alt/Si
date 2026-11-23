@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#090f23">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="GJ Games">
+<link rel="manifest" href="./manifest.webmanifest">
+<title>GJ Games · Arena Pop + Blokazo</title>
+<style>
+:root{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:#f9fbff;color-scheme:dark;background:#090e1c;--muted:#94a7c5;--line:#ffffff1c;--glass:#101b30;--a:#52ebbd;--b:#9f83ff}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overscroll-behavior:none}body{background:radial-gradient(ellipse at 90% 0%,#24204c 0%,transparent 44%),radial-gradient(ellipse at 10% 95%,#0e3e42 0%,transparent 48%),#090e1c;min-height:100dvh}button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}button:active{transform:scale(.975)}
+button:focus-visible{outline:3px solid #69eed7;outline-offset:3px}
+header{height:64px;padding:0 clamp(14px,4vw,30px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff1a;background:#0a1020c7;position:sticky;top:0;z-index:10;backdrop-filter:blur(18px)}
+.logo{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:1000;letter-spacing:-.06em}.logo-icon{height:37px;width:37px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(125deg,#57efc4,#756fff);box-shadow:0 0 25px #48daa544;color:#080d20;font-size:23px}.logo span:last-child{color:#a7c0ea}.top-actions{display:flex;align-items:center;gap:9px}.chip{background:#ffffff0c;border:1px solid var(--line);border-radius:99px;color:#a7b7d4;font-size:11px;font-weight:800;padding:7px 10px;white-space:nowrap}.btn{border:1px solid #ffffff25;background:#1b2a40;border-radius:12px;min-height:42px;padding:9px 16px;font-weight:800}.btn.soft{background:#ffffff0b}.btn.accent{color:#0a1527;background:linear-gradient(110deg,#5af0c2,#55c6f3);border:0;box-shadow:0 10px 32px #40d8bb25}.btn.alt{background:linear-gradient(120deg,#8b77ef,#c377ed);border:0}.btn.small{min-height:34px;padding:7px 11px;font-size:12px}.hide{display:none!important}
+.screen{display:none;min-height:calc(100dvh - 64px)}.screen.active{display:block}
+.home{padding:clamp(17px,5vw,48px) clamp(16px,5vw,45px) 50px;max-width:1120px;margin:0 auto}
+.intro{text-align:center;margin:12px auto 36px;max-width:720px}.eyebrow{color:#73ecd0;letter-spacing:.22em;font-size:11px;font-weight:900;text-transform:uppercase}
+h1{font-size:clamp(42px,11vw,90px);line-height:1.03;letter-spacing:-.09em;margin:12px 0 14px;font-weight:1000}
+h1 span{background:linear-gradient(100deg,#68f3bf,#80a4ff,#cf90ff);color:transparent;background-clip:text}
+.intro p{font-size:clamp(14px,3vw,18px);line-height:1.6;color:#a8bcda;margin:0 auto;max-width:510px}
+.selection-title{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:#a9bce0;font-weight:900;margin:0 0 17px}
+.game-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.game-card{overflow:hidden;border:1px solid #ffffff28;border-radius:23px;background:#111c33;box-shadow:0 15px 50px #0006;text-align:left;padding:0;display:block;position:relative;transition:filter .2s,transform .2s}
+.game-card:hover{filter:brightness(1.09);transform:translateY(-3px)}
+.art{height:clamp(190px,27vw,270px);position:relative;overflow:hidden}
+.art.arena{background:radial-gradient(circle at 53% 47%,#4c427b 0%,transparent 42%),linear-gradient(135deg,#171a45,#0c1936)}
+.art.arena:before{content:"";position:absolute;inset:0;background-image:linear-gradient(#ffffff0a 1px,transparent 1px),linear-gradient(90deg,#ffffff0a 1px,transparent 1px);background-size:34px 34px}
+.bubble{position:absolute;border-radius:50%;box-shadow:inset -12px -15px 26px #0004,inset 5px 7px 11px #fff8,0 0 26px currentColor;animation:float 3s ease-in-out infinite alternate}
+.bubble.a{width:110px;height:110px;left:14%;top:35%;background:#54e0c4;color:#5bf1bf}
+.bubble.b{width:73px;height:73px;left:59%;top:17%;background:#f5a95e;color:#fdd05b;animation-delay:-.8s}.bubble.c{width:55px;height:55px;left:70%;top:66%;background:#a59aff;color:#a59aff;animation-delay:-1.7s}
+@keyframes float{to{transform:translateY(-18px) translateX(5px)}}
+.art.blocks{background:radial-gradient(circle at 50% 73%,#152b64,transparent 60%),linear-gradient(145deg,#292356,#0d1833)}
+.mini-bricks{position:absolute;top:18%;left:13%;right:13%;display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.mini-bricks i{display:block;height:31px;border-radius:7px;background:linear-gradient(#ffffff66,transparent),#a784fa;box-shadow:0 4px 0 #0004}.mini-bricks i:nth-child(5n+1){background-color:#49d4e0}.mini-bricks i:nth-child(5n+2){background-color:#f0b65c}.mini-bricks i:nth-child(5n+4){background-color:#ea739c}
+.mini-ball{position:absolute;bottom:25%;left:54%;height:22px;width:22px;background:white;border-radius:50%;box-shadow:0 0 23px #9cefff}.mini-paddle{position:absolute;bottom:15%;left:39%;height:14px;width:26%;border-radius:20px;background:linear-gradient(90deg,#4ef4d4,#73a6ff);box-shadow:0 0 19px #61d8e8}
+.card-body{padding:20px 22px 22px}.card-meta{display:flex;align-items:center;justify-content:space-between;gap:8px}.tag{font-size:10px;letter-spacing:.12em;color:#75edd3;font-weight:900}.card-body h2{font-size:29px;letter-spacing:-.055em;margin:9px 0}.card-body p{color:#a4b7d4;font-size:14px;line-height:1.5;margin:0 0 19px}.card-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px}.best{font-size:12px;color:#9caecc}.play{background:#ffffff17;border:1px solid #ffffff2e;padding:10px 16px;border-radius:12px;font-size:14px;font-weight:850}
+.note{text-align:center;color:#8498b6;margin:27px auto 0;font-size:12px}
+.game-page{max-width:1040px;margin:0 auto;padding:14px 14px 24px}.game-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 auto 12px;max-width:600px}.game-heading h2{font-size:22px;margin:0;letter-spacing:-.04em}.game-heading p{font-size:11px;color:#8fa7cd;margin:0}.game-heading .pill{padding:7px 12px;border:1px solid #ffffff26;background:#1b2440;border-radius:15px;font-size:11px;font-weight:900}
+.hud{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:0 auto 12px;max-width:600px}.stat{padding:9px 10px;border:1px solid #ffffff20;background:#142039b9;border-radius:13px;text-align:center}.stat small{display:block;font-size:10px;color:#94aacb;font-weight:800;letter-spacing:.12em}.stat strong{font-size:21px;letter-spacing:-.05em}
+.arena-shell{width:min(100%,500px,calc((100dvh - 233px)*480/640));max-width:500px;margin:0 auto;position:relative;border-radius:22px;border:1px solid #6376b85c;background:#0b1730;overflow:hidden;box-shadow:0 15px 54px #0008;touch-action:none}
+.arena-shell canvas{display:block;width:100%;aspect-ratio:480/640;touch-action:none}
+.overlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px 25px;background:linear-gradient(150deg,#09142ce8,#17163ced);backdrop-filter:blur(8px);z-index:2}
+.overlay[hidden]{display:none}.overlay-icon{font-size:58px;filter:drop-shadow(0 4px 15px #5bf1c777);line-height:1}.overlay h3{font-size:clamp(29px,6vw,42px);letter-spacing:-.055em;margin:16px 0 8px}.overlay p{font-size:14px;color:#c1d4ee;max-width:320px;line-height:1.6;margin:0 0 16px}.overlay .result{font-size:26px;color:#67edd1;font-weight:1000;margin-bottom:15px}
+.overlay-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:9px}.game-bottom{display:flex;justify-content:center;gap:13px;align-items:center;margin:11px auto;font-size:12px;color:#8ba6c9}.game-bottom .btn{font-size:12px;min-height:35px}.hint{max-width:470px;text-align:center;margin:7px auto;color:#8094b3;font-size:12px;line-height:1.5}
+@media(max-width:650px){header{height:56px}.top-actions .chip{display:none}.screen{min-height:calc(100dvh - 56px)}.game-grid{grid-template-columns:1fr;gap:14px}.art{height:168px}.card-body{padding:15px 18px}.card-body h2{font-size:25px;margin:5px 0}.card-body p{margin-bottom:10px}.intro{margin:15px auto 20px}h1{font-size:54px}.game-page{padding:9px 10px 17px}.game-heading{margin-bottom:6px}.game-heading h2{font-size:19px}.hud{gap:6px;margin-bottom:7px}.stat{padding:6px}.stat strong{font-size:18px}.arena-shell{width:min(100%,500px,calc((100dvh - 198px)*480/640));border-radius:16px}.game-bottom{margin:8px auto 4px}.hint{font-size:11px}.btn.small{font-size:11px;padding:7px 9px}}
+@media(max-height:630px){.arena-shell{width:min(100%,500px,calc((100dvh - 191px)*480/640))}.game-page{padding-top:5px}.game-bottom{margin:3px auto}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo"><span class="logo-icon">✦</span><div>GJ<span> GAMES</span></div></div>
+<div class="top-actions">
+<div class="chip">✦ 2 JUEGOS · SIN INTERNET</div>
+<button class="btn soft small" id="soundBtn" aria-label="Activar o silenciar sonido">🔊 Sonido</button>
+<button class="btn soft small hide" id="topBack" aria-label="Volver al menú">← Menú</button>
+</div>
+</header>
+<section class="screen active" id="home">
+<div class="home">
+<div class="intro"><div class="eyebrow">✨ Tu arcade personal</div><h1>ELIGE. <span>JUEGA.</span> REPITE.</h1><p>Dos juegos, una sola app. Diversión rápida para pantalla táctil. Tus récords se quedan guardados en este dispositivo.</p></div>
+<div class="selection-title">SELECCIONA UN JUEGO</div>
+<div class="game-grid">
+<button class="game-card" id="openArena">
+<div class="art arena"><i class="bubble a"></i><i class="bubble b"></i><i class="bubble c"></i></div>
+<div class="card-body"><div class="card-meta"><span class="tag">01 / REFLEJOS</span><span class="tag">● CONTRARRELOJ</span></div><h2>🫧 Arena Pop</h2><p>Revienta burbujas en movimiento, suma combos, atrapa tiempo extra y evita las bombas.</p><div class="card-bottom"><span class="best" id="bestArena">Récord: 0</span><span class="play">JUGAR ↗</span></div></div>
+</button>
+<button class="game-card" id="openBlock">
+<div class="art blocks"><div class="mini-bricks"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><i class="mini-ball"></i><i class="mini-paddle"></i></div>
+<div class="card-body"><div class="card-meta"><span class="tag">02 / ARCADE</span><span class="tag">◆ NIVELES</span></div><h2>🧱 Blokazo</h2><p>Mueve la plataforma, rebota la pelota, destruye bloques de colores y supera niveles.</p><div class="card-bottom"><span class="best" id="bestBlock">Récord: 0</span><span class="play">JUGAR ↗</span></div></div>
+</button>
+</div><p class="note">GJ GAMES · FUNCIONA SIN INTERNET · TOCA UN JUEGO PARA EMPEZAR</p>
+</div></section>
+<section class="screen" id="arena">
+<div class="game-page">
+<div class="game-heading"><div><h2>🫧 Arena Pop</h2><p>REVienta · COMBO · SUPERA TU RÉCORD</p></div><span class="pill">MODO ARCADE</span></div>
+<div class="hud"><div class="stat"><small>PUNTOS</small><strong id="aScore">0</strong></div><div class="stat"><small>TIEMPO</small><strong id="aTime">45</strong></div><div class="stat"><small>VIDAS / COMBO</small><strong id="aLife">♥♥♥</strong></div></div>
+<div class="arena-shell"><canvas id="aCanvas" width="480" height="640" aria-label="Juego Arena Pop; toca las burbujas para reventarlas"></canvas>
+<div class="overlay" id="aOverlay"><span class="overlay-icon" id="aIcon">🫧</span><h3 id="aTitle">Arena Pop</h3><p id="aDesc">Toca las burbujas de colores. Evita las bombas oscuras. Las doradas dan tiempo extra.</p><div class="result" id="aResult" hidden></div><div class="overlay-actions"><button class="btn accent" id="aAction">▶ Empezar</button><button class="btn soft" id="aGoHome">↩ Menú</button></div></div>
+</div>
+<div class="game-bottom"><button class="btn soft small" id="aPause">⏸ Pausar</button><span>🫧 + puntos &nbsp;·&nbsp; ⏱ + tiempo &nbsp;·&nbsp; 💣 evita</span></div>
+</div></section>
+<section class="screen" id="block">
+<div class="game-page">
+<div class="game-heading"><div><h2>🧱 Blokazo</h2><p>REBOTA · ROMPE · SUBE DE NIVEL</p></div><span class="pill" id="bLevel">NIVEL 1</span></div>
+<div class="hud"><div class="stat"><small>PUNTOS</small><strong id="bScore">0</strong></div><div class="stat"><small>VIDAS</small><strong id="bLife">♥♥♥</strong></div><div class="stat"><small>BLOQUES</small><strong id="bBricks">0</strong></div></div>
+<div class="arena-shell"><canvas id="bCanvas" width="480" height="640" aria-label="Juego Blokazo; mueve la plataforma con el dedo"></canvas>
+<div class="overlay" id="bOverlay"><span class="overlay-icon" id="bIcon">🧱</span><h3 id="bTitle">Blokazo</h3><p id="bDesc">Mueve el dedo para controlar la plataforma. Evita que la pelota caiga y rompe todos los bloques.</p><div class="result" id="bResult" hidden></div><div class="overlay-actions"><button class="btn alt" id="bAction">▶ Empezar</button><button class="btn soft" id="bGoHome">↩ Menú</button></div></div>
+</div>
+<div class="game-bottom"><button class="btn soft small" id="bPause">⏸ Pausar</button><span>👆 Desliza para mover &nbsp;·&nbsp; ◀ ▶ teclado</span></div>
+</div></section>
+<script>
+(function(){
+'use strict';
+const W=480,H=640,TAU=Math.PI*2,$=id=>document.getElementById(id);
+let current='home',audio=null,sound=true,raf=0,last=performance.now();
+const KEY_A='gj-arena-best',KEY_B='gj-blokazo-best';
+function best(key){try{return Number(localStorage.getItem(key))||0}catch(e){return 0}}
+function saveBest(key,value){if(value>best(key))try{localStorage.setItem(key,String(value))}catch(e){}updateBest()}
+function updateBest(){$('bestArena').textContent='Récord: '+best(KEY_A);$('bestBlock').textContent='Récord: '+best(KEY_B)}
+function tone(f=500,d=.08,type='sine',vol=.07){if(!sound)return;try{audio=audio||new(window.AudioContext||window.webkitAudioContext)();if(audio.state==='suspended')audio.resume();const osc=audio.createOscillator(),gain=audio.createGain();osc.type=type;osc.frequency.setValueAtTime(f,audio.currentTime);gain.gain.setValueAtTime(vol,audio.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audio.currentTime+d);osc.connect(gain).connect(audio.destination);osc.start();osc.stop(audio.currentTime+d+.01)}catch(e){}}
+$('soundBtn').onclick=()=>{sound=!sound;$('soundBtn').textContent=sound?'🔊 Sonido':'🔇 Silencio';if(sound)tone()};
+const rand=(a,b)=>a+Math.random()*(b-a),clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+const aCanvas=$('aCanvas'), bCanvas=$('bCanvas'),ac=aCanvas.getContext('2d'),bc=bCanvas.getContext('2d');
+function pointer(e,canvas){const r=canvas.getBoundingClientRect();return {x:(e.clientX-r.left)*W/r.width,y:(e.clientY-r.top)*H/r.height}}
+function roundRect(c,x,y,w,h,r,fill){c.fillStyle=fill;c.beginPath();c.roundRect(x,y,w,h,r);c.fill()}
+function background(c,color1,color2){const gr=c.createLinearGradient(0,0,W,H);gr.addColorStop(0,color1);gr.addColorStop(1,color2);c.fillStyle=gr;c.fillRect(0,0,W,H);c.strokeStyle='#ffffff0a';c.lineWidth=1;for(let x=0;x<W;x+=40){c.beginPath();c.moveTo(x,0);c.lineTo(x,H);c.stroke()}for(let y=0;y<H;y+=40){c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke()}}
+function particles(c,arr,dt){for(let i=arr.length-1;i>=0;i--){const p=arr[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.vy+=130*dt;p.life-=dt;p.r=Math.max(0,p.r-dt*3);if(p.life<=0){arr.splice(i,1);continue}c.globalAlpha=clamp(p.life/p.max,0,1);c.fillStyle=p.color;c.beginPath();c.arc(p.x,p.y,p.r,0,TAU);c.fill()}c.globalAlpha=1}
+function burst(arr,x,y,color,count=12){for(let i=0;i<count;i++){const a=rand(0,TAU),speed=rand(65,240),life=rand(.25,.7);arr.push({x,y,vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,r:rand(2,6),life,max:life,color})}}
+function openGame(kind){if(current!=='home')return;current=kind;for(const id of ['home','arena','block'])$(id).classList.toggle('active',id===kind);$('topBack').classList.remove('hide');if(kind==='arena'){if(a.started&&!a.over)showOverlay('a','⏸️','Partida en pausa','Puedes seguir con tu combo o volver al menú.','▶ Continuar');else if(!a.started)showOverlay('a','🫧','Arena Pop','Toca las burbujas de colores. Evita las bombas. Las doradas suman tiempo extra.','▶ Empezar')}else{if(b.started&&!b.over)showOverlay('b','⏸️','Partida en pausa','Continúa desde tu nivel actual.','▶ Continuar');else if(!b.started)showOverlay('b','🧱','Blokazo','Desliza el dedo para mover la plataforma y romper todos los bloques.','▶ Empezar')}updateHUD()}
+function goHome(){if(current==='home')return;if(current==='arena')a.paused=true;if(current==='block')b.paused=true;current='home';for(const id of ['home','arena','block'])$(id).classList.toggle('active',id==='home');$('topBack').classList.add('hide');updateBest()}
+window.GJBack=function(){if(current!=='home')goHome();else if(window.GJNative&&typeof window.GJNative.exit==='function')window.GJNative.exit();return true};
+$('topBack').onclick=goHome;$('aGoHome').onclick=goHome;$('bGoHome').onclick=goHome;
+$('openArena').onclick=()=>openGame('arena');$('openBlock').onclick=()=>openGame('block');
+function showOverlay(prefix,icon,title,desc,action,result){$(prefix+'Overlay').hidden=false;$(prefix+'Icon').textContent=icon;$(prefix+'Title').textContent=title;$(prefix+'Desc').textContent=desc;$(prefix+'Action').textContent=action;$(prefix+'Result').hidden=typeof result==='undefined';$(prefix+'Result').textContent=result===undefined?'':result}
+function hideOverlay(prefix){$(prefix+'Overlay').hidden=true}
+const a={started:false,over:false,paused:true,score:0,life:3,time:45,combo:0,spawn:0,objects:[],fx:[],ticks:0};
+function arenaSpawn(){const t=rand(0,1),type=t<.16?'bomb':t<.23?'time':'pop';const radius=type==='bomb'?rand(18,27):type==='time'?22:rand(22,39);
+const angle=rand(0,TAU),speed=rand(30,65)+a.ticks*.16;
+a.objects.push({x:rand(radius+20,W-radius-20),y:rand(radius+20,H-radius-35),vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,r:radius,type,color:['#62ebcf','#67b8ff','#bd8bff','#ff9fbe','#ffc66d'][Math.floor(rand(0,5))],age:0})}
+function arenaStart(){if(!a.started||a.over){Object.assign(a,{started:true,over:false,paused:false,score:0,life:3,time:45,combo:0,spawn:0,objects:[],fx:[],ticks:0});for(let i=0;i<6;i++)arenaSpawn()}else a.paused=false;hideOverlay('a');updateHUD();tone(550,.15)}
+function arenaEnd(){a.over=true;a.paused=true;saveBest(KEY_A,a.score);showOverlay('a','🏆','¡Partida terminada!',a.life===0?'Te quedaste sin vidas. Inténtalo otra vez.':'¡Se acabó el tiempo! Inténtalo de nuevo.','↻ Volver a jugar','Puntos: '+a.score);tone(250,.3,'triangle')}
+function arenaHit(x,y){if(!a.started||a.paused||a.over)return;for(let i=a.objects.length-1;i>=0;i--){const o=a.objects[i];if(Math.hypot(x-o.x,y-o.y)<o.r+8){a.objects.splice(i,1);if(o.type==='bomb'){a.life--;a.combo=0;burst(a.fx,o.x,o.y,'#ff5577',25);tone(135,.22,'sawtooth',.1);if(a.life<=0)arenaEnd()}else if(o.type==='time'){a.time=Math.min(65,a.time+5);a.score+=80;burst(a.fx,o.x,o.y,'#ffd46c',22);tone(770,.16)}else{a.combo++;a.score+=10+Math.min(10,a.combo)*5;burst(a.fx,o.x,o.y,o.color,16);tone(400+Math.min(a.combo*35,400),.08,'triangle')}updateHUD();return}}a.combo=0}
+aCanvas.addEventListener('pointerdown',e=>{e.preventDefault();const p=pointer(e,aCanvas);arenaHit(p.x,p.y)});
+function updateArena(dt){if(!a.started||a.paused||a.over)return;a.ticks+=dt;a.time-=dt;if(a.time<=0){a.time=0;arenaEnd();return}a.spawn-=dt;if(a.spawn<=0&&a.objects.length<13){arenaSpawn();a.spawn=Math.max(.3,1.0-a.ticks*.009)}for(const o of a.objects){o.x+=o.vx*dt;o.y+=o.vy*dt;o.age+=dt;if(o.x<o.r||o.x>W-o.r){o.vx*=-1;o.x=clamp(o.x,o.r,W-o.r)}if(o.y<o.r||o.y>H-o.r){o.vy*=-1;o.y=clamp(o.y,o.r,H-o.r)}}updateHUD()}
+function drawArena(){background(ac,'#152756','#10132c');ac.fillStyle='#172756';ac.fillRect(0,H-30,W,30);for(let j=0;j<7;j++){const x=55+j*65;ac.fillStyle='#72e7e30d';ac.beginPath();ac.arc(x,100,5,0,TAU);ac.fill()}
+for(const o of a.objects){ac.save();const halo=ac.createRadialGradient(o.x,o.y,3,o.x,o.y,o.r*1.65);halo.addColorStop(0,o.type==='bomb'?'#ff446633':o.type==='time'?'#ffca444f':o.color+'6b');halo.addColorStop(1,'#00000000');ac.fillStyle=halo;ac.beginPath();ac.arc(o.x,o.y,o.r*1.65,0,TAU);ac.fill();const fill=ac.createRadialGradient(o.x-o.r*.3,o.y-o.r*.35,1,o.x,o.y,o.r);if(o.type==='bomb'){fill.addColorStop(0,'#89425e');fill.addColorStop(1,'#1c1b37')}else if(o.type==='time'){fill.addColorStop(0,'#fff2a6');fill.addColorStop(1,'#efa92e')}else{fill.addColorStop(0,'#eaffff');fill.addColorStop(.18,o.color);fill.addColorStop(1,'#24415b')}ac.fillStyle=fill;ac.beginPath();ac.arc(o.x,o.y,o.r,0,TAU);ac.fill();ac.strokeStyle='#ffffff66';ac.lineWidth=1.8;ac.stroke();ac.fillStyle='#ffffffad';ac.beginPath();ac.arc(o.x-o.r*.25,o.y-o.r*.28,o.r*.16,0,TAU);ac.fill();if(o.type!=='pop'){ac.font='bold '+Math.round(o.r*1.1)+'px system-ui';ac.textAlign='center';ac.textBaseline='middle';ac.fillText(o.type==='time'?'+5':'×',o.x,o.y+1)}ac.restore()}
+particles(ac,a.fx,0);ac.fillStyle='#d1e9ff88';ac.font='700 13px system-ui';ac.textAlign='center';ac.fillText('TOCA LAS BURBUJAS · EVITA LAS OSCURAS',W/2,H-11)}
+function updateHUD(){$('aScore').textContent=a.score.toLocaleString('es-MX');$('aTime').textContent=Math.ceil(Math.max(0,a.time));$('aLife').textContent='♥'.repeat(a.life)+(a.combo>1?' x'+a.combo:'');$('bScore').textContent=b.score.toLocaleString('es-MX');$('bLife').textContent='♥'.repeat(b.life);$('bBricks').textContent=b.bricks.filter(o=>o.hp>0).length;$('bLevel').textContent='NIVEL '+b.level}
+$('aAction').onclick=arenaStart;$('aPause').onclick=()=>{if(!a.started||a.over)return;if(a.paused){arenaStart()}else{a.paused=true;showOverlay('a','⏸️','En pausa','Tu partida está guardada mientras eliges continuar.','▶ Continuar')}};
+const b={started:false,over:false,paused:true,score:0,life:3,level:1,bricks:[],fx:[],drops:[],paddle:{x:190,y:574,w:100,h:14},ball:{x:240,y:554,vx:170,vy:-300,r:9},levelWait:0};
+const brickColors=['#ff6f9c','#ffba59','#68e0ce','#6aaaff','#a58eff','#ee7ad7'];
+function makeBricks(){b.bricks=[];const cols=7,rows=Math.min(7,4+Math.floor(b.level/2)),w=58,gap=7,offset=(W-(cols*w+(cols-1)*gap))/2;for(let row=0;row<rows;row++)for(let col=0;col<cols;col++){if(b.level>=3&&row===1&&col===3)continue;const hp=(b.level>=2&&row<Math.min(3,b.level-1))?2:1;b.bricks.push({x:offset+col*(w+gap),y:89+row*32,w,h:24,hp,max:hp,color:brickColors[(row+b.level-1)%brickColors.length]})}}
+function ballReset(){b.paddle={x:W/2-51,y:578,w:102,h:14};const speed=300+Math.min(170,(b.level-1)*30);b.ball={x:240,y:540,vx:rand(-125,125),vy:-Math.sqrt(speed*speed-125*125),r:9};b.levelWait=0}
+function blockStart(){if(!b.started||b.over){Object.assign(b,{started:true,over:false,paused:false,score:0,life:3,level:1,fx:[],drops:[]});ballReset();makeBricks()}else b.paused=false;hideOverlay('b');updateHUD();tone(500,.14)}
+function blockEnd(){b.over=true;b.paused=true;saveBest(KEY_B,b.score);showOverlay('b','🏆','¡Fin del juego!',b.score>0?'La próxima vez puedes romper todavía más bloques.':'¡Inténtalo otra vez!','↻ Reintentar','Puntos: '+b.score);tone(220,.3,'triangle')}
+function nextLevel(){b.level++;ballReset();makeBricks();b.paused=true;saveBest(KEY_B,b.score);showOverlay('b','✨','¡Nivel superado!','Ahora los bloques serán más resistentes.','▶ Siguiente nivel','Puntos: '+b.score);tone(800,.2);updateHUD()}
+function movePaddle(p){b.paddle.x=clamp(p.x-b.paddle.w/2,5,W-5-b.paddle.w)}
+bCanvas.addEventListener('pointerdown',e=>{e.preventDefault();movePaddle(pointer(e,bCanvas));bCanvas.setPointerCapture(e.pointerId)});
+bCanvas.addEventListener('pointermove',e=>{if(e.buttons||e.pointerType==='touch')movePaddle(pointer(e,bCanvas))});
+const keys={};addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();goHome()}if(e.key==='ArrowLeft'||e.key==='ArrowRight'){keys[e.key]=true;if(current==='block')e.preventDefault()}});addEventListener('keyup',e=>{keys[e.key]=false});
+function updateBlock(dt){if(!b.started||b.paused||b.over)return;const p=b.paddle,v=b.ball;if(keys.ArrowLeft)p.x-=370*dt;if(keys.ArrowRight)p.x+=370*dt;p.x=clamp(p.x,5,W-p.w-5);
+v.x+=v.vx*dt;v.y+=v.vy*dt;
+if(v.x-v.r<0&&v.vx<0||v.x+v.r>W&&v.vx>0){v.vx*=-1;v.x=clamp(v.x,v.r,W-v.r);tone(150,.03)}if(v.y-v.r<0&&v.vy<0){v.vy=Math.abs(v.vy);v.y=v.r; tone(150,.03)}
+if(v.vy>0&&v.y+v.r>=p.y&&v.y-v.r<=p.y+p.h&&v.x>=p.x-5&&v.x<=p.x+p.w+5){const impact=clamp((v.x-(p.x+p.w/2))/(p.w/2),-1,1),speed=Math.min(550,Math.hypot(v.vx,v.vy)+6);v.vx=impact*speed*.83;v.vy=-Math.sqrt(Math.max(speed*speed-v.vx*v.vx,80));v.y=p.y-v.r-1;burst(b.fx,v.x,p.y,'#83eaff',7);tone(320,.07)}
+if(v.y>H+18){b.life--;burst(b.fx,v.x,H-9,'#ff537a',14);tone(110,.25,'sawtooth');if(b.life<=0)blockEnd();else ballReset()}
+for(const o of b.bricks){if(o.hp<=0)continue;const nearX=clamp(v.x,o.x,o.x+o.w),nearY=clamp(v.y,o.y,o.y+o.h);if(Math.hypot(v.x-nearX,v.y-nearY)<v.r){o.hp--;b.score+=o.hp>0?10:25*b.level;burst(b.fx,v.x,v.y,o.color,9);const dx=v.x-(o.x+o.w/2),dy=v.y-(o.y+o.h/2);if(Math.abs(dx/o.w)>Math.abs(dy/o.h))v.vx*=-1;else v.vy*=-1;tone(520+o.color.length*15,.065,'triangle');if(o.hp===0&&Math.random()<.09)b.drops.push({x:o.x+o.w/2,y:o.y,w:0,type:Math.random()<.7?'wide':'life'});break}}
+for(let i=b.drops.length-1;i>=0;i--){const d=b.drops[i];d.y+=115*dt;if(d.y>=p.y-10&&d.y<p.y+22&&d.x>=p.x&&d.x<=p.x+p.w){if(d.type==='wide'){p.w=Math.min(170,p.w+28);p.x=clamp(p.x,5,W-p.w-5)}else b.life=Math.min(5,b.life+1);burst(b.fx,d.x,d.y,'#ffd56d',14);tone(870,.15);b.drops.splice(i,1)}else if(d.y>H)b.drops.splice(i,1)}
+if(b.bricks.every(o=>o.hp<=0))nextLevel();updateHUD()}
+function drawBlock(){background(bc,'#121e42','#11102c');bc.fillStyle='#a3aaff0c';bc.fillRect(0,78,W,300);bc.fillStyle='#abc3ff44';bc.font='700 12px system-ui';bc.textAlign='center';bc.fillText('ROMPE TODOS LOS BLOQUES PARA SUBIR DE NIVEL',W/2,42);
+for(const o of b.bricks){if(o.hp<=0)continue;roundRect(bc,o.x,o.y,o.w,o.h,6,o.color);roundRect(bc,o.x+3,o.y+3,o.w-6,5,3,'#ffffff55');if(o.hp>1){roundRect(bc,o.x+5,o.y+o.h-6,o.w-10,3,1,'#10162999')}}
+for(const d of b.drops){bc.beginPath();bc.arc(d.x,d.y,13,0,TAU);bc.fillStyle=d.type==='life'?'#ff7091':'#ffd26a';bc.fill();bc.textAlign='center';bc.fillStyle='#182139';bc.font='bold 15px system-ui';bc.fillText(d.type==='life'?'+':'↔',d.x,d.y+5)}
+const p=b.paddle;const gr=bc.createLinearGradient(p.x,0,p.x+p.w,0);gr.addColorStop(0,'#61eec5');gr.addColorStop(1,'#8598ff');roundRect(bc,p.x,p.y,p.w,p.h,8,gr);roundRect(bc,p.x+8,p.y+3,Math.max(0,p.w-16),3,2,'#ffffffaa');
+const v=b.ball;bc.shadowColor='#81efff';bc.shadowBlur=22;bc.fillStyle='#eaffff';bc.beginPath();bc.arc(v.x,v.y,v.r,0,TAU);bc.fill();bc.shadowBlur=0;bc.fillStyle='#ffffff22';bc.fillRect(0,H-24,W,24);particles(bc,b.fx,0)}
+$('bAction').onclick=blockStart;$('bPause').onclick=()=>{if(!b.started||b.over)return;if(b.paused)blockStart();else{b.paused=true;showOverlay('b','⏸️','En pausa','Tus puntos y tu nivel siguen aquí.','▶ Continuar')}};
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)return;if(current==='arena'&&a.started&&!a.over&&!a.paused){a.paused=true;showOverlay('a','⏸️','En pausa','Puedes continuar desde donde ibas.','▶ Continuar')}if(current==='block'&&b.started&&!b.over&&!b.paused){b.paused=true;showOverlay('b','⏸️','En pausa','Puedes continuar desde donde ibas.','▶ Continuar')}});
+function frame(ts){const dt=Math.min(.034,Math.max(0,(ts-last)/1000));last=ts;if(current==='arena'){updateArena(dt);drawArena();if(a.started&&!a.paused&&!a.over&&a.fx.length)particles(ac,a.fx,dt)}else if(current==='block'){updateBlock(dt);drawBlock();if(b.started&&!b.paused&&!b.over&&b.fx.length)particles(bc,b.fx,dt)}raf=requestAnimationFrame(frame)}
+updateBest();updateHUD();raf=requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "GJ Games · Arena Pop + Blokazo",
+  "short_name": "GJ Games",
+  "description": "Dos juegos arcade para Android sin internet",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#090f23",
+  "theme_color": "#090f23",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

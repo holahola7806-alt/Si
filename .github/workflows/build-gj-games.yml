@@ -1,0 +1,39 @@
+name: Build GJ Games APK
+on:
+  push:
+    branches: [gj-games]
+    paths: ['index.html','android/**','.github/workflows/build-gj-games.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10.2'
+      - name: Package offline GJ Games
+        run: |
+          mkdir -p android/app/src/main/assets
+          cp index.html android/app/src/main/assets/index.html
+      - name: Build Android application
+        run: gradle -p android --no-daemon assembleDebug
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: GJ-Games-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+      - name: Publish APK download
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete gj-games-v1 --yes --cleanup-tag || true
+          gh release create gj-games-v1 android/app/build/outputs/apk/debug/app-debug.apk --title "GJ Games v1.0 Android" --notes "Arena Pop y Blokazo. App offline para Android. APK debug para instalación manual." --target "$GITHUB_SHA"
