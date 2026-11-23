@@ -22,7 +22,7 @@ jobs:
       - name: Package offline GJ Games
         run: |
           mkdir -p android/app/src/main/assets
-          cp index.html android/app/src/main/assets/index.html
+          cp index.html arena-pop.html blokazo.html android/app/src/main/assets/
       - name: Build Android application
         run: gradle -p android --no-daemon assembleDebug
       - name: Upload APK artifact
@@ -35,5 +35,5 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          gh release delete gj-games-v1 --yes --cleanup-tag || true
-          gh release create gj-games-v1 android/app/build/outputs/apk/debug/app-debug.apk --title "GJ Games v1.0 Android" --notes "Arena Pop y Blokazo. App offline para Android. APK debug para instalación manual." --target "$GITHUB_SHA"
+          gh release delete gj-games-originales-v2 --yes --cleanup-tag || true
+          gh release create gj-games-originales-v2 android/app/build/outputs/apk/debug/app-debug.apk --title "GJ Games v2.0 · Juegos Originales" --notes "Arena Pop original corregido + Blokazo original. Menú y regreso entre juegos. Sin conexión." --target "$GITHUB_SHA"
