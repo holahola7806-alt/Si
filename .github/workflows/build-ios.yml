@@ -1,0 +1,49 @@
+name: Build GJ Games iOS IPA (unsigned)
+on:
+  push:
+    branches: [gj-games]
+    paths:
+      - "ios/**"
+      - ".github/workflows/build-ios.yml"
+      - "*.html"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build-ios:
+    runs-on: macos-15
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare offline web assets
+        run: |
+          mkdir -p ios/Web
+          cp index.html arena-pop.html blokazo.html ios/Web/
+      - name: Prepare XcodeGen
+        run: |
+          if ! command -v xcodegen >/dev/null 2>&1; then brew install xcodegen; fi
+          xcodebuild -version
+      - name: Create Xcode project
+        working-directory: ios
+        run: xcodegen generate
+      - name: Compile native iOS app (unsigned)
+        working-directory: ios
+        run: |
+          xcodebuild -project GJGames.xcodeproj -scheme GJGames -configuration Release -sdk iphoneos -derivedDataPath ../ios-build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p Payload
+          cp -R "ios-build/Build/Products/Release-iphoneos/GJGames.app" Payload/
+          zip -q -r "GJ_Games_unsigned.ipa" Payload
+          unzip -l "GJ_Games_unsigned.ipa" | grep -E '(index.html|GJGames.app/)' | head -15
+      - uses: actions/upload-artifact@v4
+        with:
+          name: GJGames-iOS-unsigned
+          path: GJ_Games_unsigned.ipa
+          if-no-files-found: error
+      - name: Publish unsigned IPA release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete gj-games-ios-1 --yes --cleanup-tag || true
+          gh release create gj-games-ios-1 "GJ_Games_unsigned.ipa" --title "GJ Games iOS - unsigned IPA" --notes "Unsigned iOS build. Must be signed with an Apple certificate before it can be installed on iPhone or iPad. Includes bundled offline HTML." --target "$GITHUB_SHA"
