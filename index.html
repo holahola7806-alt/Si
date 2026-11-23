@@ -1,69 +1,296 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Cartulina Studio · Mesopithecus</title>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#171d27">
+<meta name="application-name" content="Cartulina Studio">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="./icon.svg">
+<title>Cartulina Studio · Tu taller creativo</title>
 <style>
-:root{color-scheme:dark;--bg:#111722;--p:#1c2635;--border:#354155;--a:#70e7b7}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:#f4f7fb;font:14px system-ui,-apple-system,sans-serif}button,input,select{font:inherit}button{border:1px solid var(--border);background:#283549;color:#fff;border-radius:9px;padding:9px 11px;cursor:pointer}button.active{background:#147a68;border-color:#70e7b7}button:hover{filter:brightness(1.2)}header{padding:12px 18px;background:#1b2532;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--border)}h1{font-size:19px;margin:0}header span{font-size:12px;color:#9db2c9}main{display:grid;grid-template-columns:240px minmax(0,1fr) 218px;min-height:calc(100vh - 66px)}aside{padding:14px;background:var(--p);border-right:1px solid var(--border)}aside:last-child{border-left:1px solid var(--border);border-right:0}h2{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#a2b8cd;margin:10px 0}.tools{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.tools button{font-size:12px}.control{display:block;margin:12px 0;color:#d9e6f2}.control input,.control select{margin-top:5px;width:100%;padding:7px;border:1px solid var(--border);border-radius:8px;background:#131c28;color:#fff}.control input[type=color]{height:37px;padding:2px}.workspace{padding:20px;min-width:0;overflow:auto;background:radial-gradient(circle,#435066 1px,transparent 1px) 0 0 / 19px 19px #131c29}.stage{margin:0 auto;max-width:1100px;box-shadow:0 15px 60px #0009;background:#fbf4cf;border-radius:3px;position:relative;aspect-ratio:1.414;touch-action:none;overflow:hidden}.stage svg{display:block;width:100%;height:100%;touch-action:none;user-select:none}.actions{display:flex;flex-wrap:wrap;gap:7px}.hint{line-height:1.55;color:#a9bdcf;font-size:12px}.badge{display:inline-block;padding:4px 8px;background:#124e43;border-radius:6px;color:#b3ffe1;font-size:11px}.swatches{display:flex;flex-wrap:wrap;gap:7px}.swatch{width:25px;height:25px;border-radius:50%;border:2px solid #fff6;padding:0}.stack{display:grid;gap:7px}.notice{font-size:11px;color:#91a8ba;margin-top:14px}#file{display:none}@media(max-width:900px){main{grid-template-columns:1fr}.workspace{order:0;min-height:340px;padding:10px}aside{order:1;border-top:1px solid var(--border);border-right:0;padding:12px}aside:last-child{order:2}.stage{min-width:0}header{padding:10px}h1{font-size:17px}} 
-</style></head><body><header><div><h1>🎨 Cartulina Studio <span class="badge">MESOPITHECUS</span></h1><span>Tu taller virtual de cartulinas, plumones, fomi y más</span></div><div class="actions"><button id="template">🐒 Plantilla</button><button id="clear">Cartulina vacía</button><button id="undo">↶ Deshacer</button><button id="save">⬇ PNG</button></div></header>
-<main>
-<aside><h2>Materiales</h2><div class="tools" id="tools"></div><h2>Colores</h2><div class="swatches" id="swatches"></div><label class="control">Color personalizado<input type="color" id="color" value="#245b44"></label><label class="control">Grosor del plumón: <output id="sizeLabel">7</output><input type="range" id="size" min="1" max="36" value="7"></label><label class="control">Color de cartulina<input type="color" id="paper" value="#fbf4cf"></label><p class="hint">✏️ Dibuja sobre la cartulina. Con <b>Seleccionar</b> puedes arrastrar textos, figuras y adornos. El botón de plantilla coloca ideas para tu exposición de inglés.</p></aside>
-<div class="workspace"><div class="stage" id="stage"><svg id="canvas" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 707"><g id="content"></g></svg></div><p class="hint" style="text-align:center">Diseño horizontal · arrastra para mover objetos · exporta para imprimir o copiar en tu cartulina real</p></div>
-<aside><h2>Diseño</h2><p class="hint">Para agregar texto elige <b>Texto</b> y toca la cartulina. Para dibujar usa lápiz, plumón, pincel o resaltador.</p><label class="control">Texto nuevo<input id="text" placeholder="Write in English..." value="MESOPITHECUS"></label><label class="control">Tamaño de letra<input type="range" min="15" max="110" value="40" id="fontSize"></label><div class="stack"><button id="addText">＋ Insertar texto</button><button id="addImage">🖼 Subir una imagen</button><input id="file" type="file" accept="image/*"><button id="delete">🗑 Eliminar seleccionado</button><button id="front">⬆ Traer al frente</button><button id="back">⬇ Enviar atrás</button><button id="jsonSave">💾 Guardar proyecto</button><button id="jsonLoad">📂 Abrir proyecto</button><input type="file" accept=".json,application/json" id="jsonFile" hidden></div><h2>Tips</h2><p class="hint">Usa el fomi para títulos y decoraciones. Combina un dibujo grande del Mesopithecus en el centro con seis cuadros de información.</p><p class="notice">Tus cambios se guardan automáticamente en este navegador.</p></aside>
-</main>
+:root{--ink:#eaf0f8;--muted:#a7b3c6;--dark:#171d27;--panel:#232c3b;--panel2:#2a3546;--line:#3a4658;--accent:#82e5c1;--accentDark:#163d34;--rose:#ffb5aa;--radius:15px}
+*{box-sizing:border-box}html,body{height:100%;margin:0}body{font-family:Inter,'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--dark);color:var(--ink);overflow:hidden}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.4;cursor:not-allowed}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.app{height:100dvh;display:grid;grid-template-rows:66px minmax(0,1fr) 39px;min-height:0}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;border-bottom:1px solid var(--line);background:#1d2530;z-index:5}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}.logo{height:41px;width:41px;display:grid;place-items:center;border-radius:13px;background:linear-gradient(135deg,#98efd2,#73aed8);font-size:24px;box-shadow:0 0 0 3px #ffffff0a}.brand h1{font-size:17px;letter-spacing:-.04em;margin:0}.brand p{font-size:10px;letter-spacing:.12em;color:#a8b6c9;margin:3px 0 0;font-weight:750}.topactions{display:flex;align-items:center;gap:7px;flex-wrap:wrap;justify-content:flex-end}.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:35px;border:1px solid #4b586b;background:#303c4e;color:#eaf0f8;padding:7px 11px;border-radius:10px;font-size:12px;font-weight:650;white-space:nowrap;transition:background .14s}.btn:hover{background:#405066}.btn.primary{background:var(--accent);color:#123d32;border-color:var(--accent)}.btn.primary:hover{background:#a5f3d9}.btn.warn{background:#55383e;border-color:#86565c;color:#ffd3cb}.btn.square{min-width:36px;padding:6px}.btn.tiny{min-height:29px;padding:5px 8px;font-size:11px}.mobile-only{display:none}
+.workarea{display:grid;grid-template-columns:252px minmax(0,1fr) 276px;min-height:0}.sidebar{overflow-y:auto;overscroll-behavior:contain;background:#202936;min-height:0;padding:15px 14px 25px;scrollbar-width:thin;scrollbar-color:#516076 transparent}.sidebar.left{border-right:1px solid var(--line)}.sidebar.right{border-left:1px solid var(--line)}.section{margin:0 0 20px}.sec-title{display:flex;align-items:center;justify-content:space-between;text-transform:uppercase;color:#b5c4d5;font-size:10px;letter-spacing:.17em;font-weight:800;margin:0 0 10px}.subtle{font-size:11px;color:var(--muted);line-height:1.5}.tool-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.tool{height:66px;background:#293545;color:#cdd8e8;border:1px solid #3d4a5e;border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:10px;font-weight:650}.tool:hover{border-color:#729b91;background:#344353}.tool.active{border:1px solid #95efcf;background:#235043;box-shadow:inset 0 0 0 1px #95efcf55;color:#d5ffef}.tool .symbol{font-size:24px;line-height:1}.group-box{padding:12px;background:#283344;border:1px solid #374659;border-radius:12px;margin-bottom:9px}.field-label{font-size:11px;color:#b9c8d8;display:block;margin:0 0 8px;font-weight:650}.input-row{display:flex;align-items:center;gap:10px}.range{accent-color:#83dfc1;min-width:0;width:100%}.value-pill{font-size:11px;color:#a3ebd1;background:#193f35;padding:4px 7px;border-radius:7px;min-width:42px;text-align:center}.input,.select{background:#17202b;border:1px solid #48576b;color:#e8effa;padding:9px;border-radius:8px;width:100%;font-size:12px;min-width:0}.textarea{min-height:75px;resize:vertical;background:#17202b;border:1px solid #48576b;color:#e8effa;padding:9px;border-radius:8px;width:100%;font-size:12px;line-height:1.45}.swatches{display:grid;grid-template-columns:repeat(8,1fr);gap:7px;margin-bottom:9px}.swatch{padding:0;border-radius:7px;height:22px;min-width:0;border:2px solid #ffffff44}.swatch.selected{outline:2px solid white;outline-offset:2px}.color-row{display:flex;align-items:center;gap:9px}.color-row input[type=color]{width:44px;height:34px;padding:3px;border-radius:8px;background:#1d2836;border:1px solid #526278}.color-row span{color:#b9c7d5;font-size:11px}.option-row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:11px 0}.option-row label{font-size:11px;color:#cbd8e5;cursor:pointer}.option-row input[type=checkbox]{accent-color:#78dcb7;width:15px;height:15px}
+.workspace{position:relative;min-height:0;overflow:hidden;background:radial-gradient(circle at 50% 32%,#394456 0%,#293340 47%,#202935 100%);display:flex;flex-direction:column}.stage-top{height:51px;display:flex;justify-content:space-between;align-items:center;padding:8px 20px;border-bottom:1px solid #ffffff12;gap:8px;z-index:1}.stage-top .tag{font-size:10px;color:#becbd8;letter-spacing:.035em}.zoomctl{display:flex;align-items:center;gap:7px;color:#b8c7d5;font-size:12px}.zoomctl button{border:1px solid #485667;background:#283444;color:#c9d5e3;width:27px;height:27px;border-radius:7px}.stage-scroll{flex:1;min-height:0;overflow:auto;display:flex;align-items:safe center;justify-content:safe center;padding:32px 28px 45px;overscroll-behavior:contain}.artboard-holder{width:100%;max-width:1080px;flex-shrink:0}.artboard{position:relative;margin:auto;border:7px solid #ffffff70;border-radius:2px;box-shadow:0 19px 35px #0008,0 0 0 1px #16191d;touch-action:none;user-select:none;transition:box-shadow .15s}.artboard canvas{display:block;width:100%;height:auto;touch-action:none;cursor:crosshair}.artboard.select-mode canvas{cursor:default}.artboard.dragging canvas{cursor:grabbing}.artboard:after{content:'';pointer-events:none;position:absolute;inset:0;box-shadow:inset 0 0 0 1px #00000016}.stage-note{position:absolute;bottom:11px;left:50%;transform:translateX(-50%);background:#1d2938d9;border:1px solid #596678;color:#e1eaf3;border-radius:99px;font-size:11px;padding:6px 13px;white-space:nowrap;pointer-events:none;max-width:95%;overflow:hidden;text-overflow:ellipsis}.footer{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:0 18px;border-top:1px solid var(--line);background:#1d2530;color:#9dacbe;font-size:11px}.footer strong{color:#a4e5c9;font-weight:600}.two{display:grid;grid-template-columns:1fr 1fr;gap:7px}.shape-preview{height:34px;padding:5px 8px;background:#193d35;border-radius:8px;color:#b2f5dc;font-size:11px;display:grid;place-items:center}.separator{height:1px;background:#3b4858;margin:12px 0}.hidden{display:none!important}.hint{padding:10px;background:#203d3b;border:1px solid #3c7366;border-radius:11px;color:#c9e8de;font-size:11px;line-height:1.5}.chip{border:1px solid #526072;border-radius:8px;padding:6px 8px;font-size:11px;background:#283344;color:#d4e2ee}.badgelite{font-size:10px;padding:4px 7px;border-radius:6px;background:#344259;color:#b8ccdc}.select-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin:9px 0}.kbd{font:10px monospace;padding:2px 4px;border:1px solid #5b6778;border-radius:4px;background:#2b3747}
+body.mobile-tools .left{display:block}
+@media(max-width:1140px){.workarea{grid-template-columns:213px minmax(0,1fr) 234px}.sidebar{padding:12px 10px}.tool-grid{gap:5px}.tool{height:64px}.topbar{padding:9px 12px}.topactions .hide-mid{display:none}}
+@media(max-width:850px){.app{grid-template-rows:58px minmax(0,1fr) 34px}.workarea{display:flex;flex-direction:column;overflow-y:auto}.sidebar.left{display:block;flex:none;padding:9px 12px 10px;border-right:0;border-bottom:1px solid var(--line);overflow:visible}.sidebar.left .section{margin:0}.sidebar.left .sec-title{margin-bottom:7px}.sidebar.left .tool-grid{grid-template-columns:repeat(12,minmax(53px,1fr));overflow-x:auto;scrollbar-width:thin}.sidebar.left .tool{height:53px;min-width:53px;font-size:9px}.sidebar.left .tool .symbol{font-size:20px}.sidebar.left .section:not(:first-child){display:none}.workspace{height:min(54vh,620px);min-height:330px;flex:none;overflow:hidden}.sidebar.right{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;border:0;border-top:1px solid var(--line);padding:12px;flex:none;overflow:visible}.sidebar.right .section{margin-bottom:0}.sidebar.right .section:last-child{grid-column:1/-1}.stage-scroll{padding:22px 14px 30px}.stage-top{height:39px;padding:6px 12px}.stage-note{bottom:5px;font-size:9px}.topactions .hide-mobile{display:none}.mobile-only{display:inline-flex}.brand h1{font-size:14px}.brand p{display:none}.logo{height:36px;width:36px}.footer{padding:0 10px;font-size:10px}}
+@media(max-width:540px){.sidebar.right{grid-template-columns:1fr}.sidebar.right .section:last-child{grid-column:auto}.brand{gap:6px}.topbar{gap:4px}.topactions{gap:4px}.topactions .btn{min-height:33px;padding:5px 8px;font-size:10px}.workspace{min-height:300px;height:47vh}.stage-top .tag{font-size:9px}.stage-scroll{padding:18px 10px 34px}.footer span:last-child{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* Cartulina Studio 3 — responsive mobile controls */
+.mobile-dock{display:none}
+.layer-item{display:flex;gap:5px;align-items:center;margin:5px 0;border:1px solid #455268;background:#1b2837;border-radius:8px;padding:6px;color:#d7e7f4;font-size:11px}
+.layer-item.is-current{border-color:#80e3bf;background:#1d453e}
+.layer-item .layer-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer}
+.layer-item .layer-vis{min-width:30px;padding:4px;background:#293e4e;color:#dce8f1;border:0;border-radius:5px}
+.layers-list{max-height:240px;overflow-y:auto}
+.layer-empty{font-size:11px;color:#8fa8ba;padding:6px 0}
+@media(max-width:850px){.sidebar.left .section:not(:first-child){display:block;margin:12px 0 0}.mobile-dock{display:flex;position:fixed;z-index:30;bottom:0;left:0;right:0;padding:6px 8px max(7px,env(safe-area-inset-bottom));gap:5px;background:#172331ee;border-top:1px solid #3b4d61;backdrop-filter:blur(12px);justify-content:space-around}.mobile-dock button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;color:#d5e7f1;border:1px solid transparent;background:transparent;border-radius:8px;padding:5px 0}.mobile-dock button.active{background:#225f4f;border-color:#8aecbd}.mobile-dock button span{font-size:20px}.app{padding-bottom:59px}.sidebar.right{padding-bottom:70px}.stage-scroll{padding-bottom:30px}}
+</style>
+</head>
+<body>
+<div class="app">
+ <header class="topbar">
+  <div class="brand"><span class="logo" aria-hidden="true">🎨</span><div><h1>Cartulina Studio</h1><p>TU TALLER CREATIVO</p></div></div>
+  <div class="topactions">
+    <button class="btn square" id="undoBtn" title="Deshacer (Ctrl+Z)">↶</button>
+    <button class="btn square" id="redoBtn" title="Rehacer (Ctrl+Y)">↷</button>
+    <button class="btn hide-mobile" id="templateBtn">🐒 Plantilla Mesopithecus</button>
+    <button class="btn hide-mid" id="saveBtn">💾 Guardar proyecto</button>
+    <button class="btn primary" id="exportBtn">⬇ PNG</button>
+    <button class="btn square mobile-only" id="moreBtn" title="Opciones de archivo">☰</button>
+  </div>
+ </header>
+ <div class="workarea">
+  <aside class="sidebar left" aria-label="Materiales y herramientas">
+   <section class="section"><h2 class="sec-title">🧰 Mi caja de materiales <span class="badgelite">12 herramientas</span></h2>
+    <div class="tool-grid" id="tools">
+     <button class="tool active" data-tool="select" title="Selecciona, mueve y cambia el tamaño"><span class="symbol">👆</span>Seleccionar</button>
+     <button class="tool" data-tool="pencil"><span class="symbol">✏️</span>Lápiz</button>
+     <button class="tool" data-tool="marker"><span class="symbol">🖊️</span>Plumón</button>
+     <button class="tool" data-tool="highlighter"><span class="symbol">🖍️</span>Resaltador</button>
+     <button class="tool" data-tool="brush"><span class="symbol">🖌️</span>Pincel</button>
+     <button class="tool" data-tool="line"><span class="symbol">📏</span>Regla</button>
+     <button class="tool" data-tool="rectangle"><span class="symbol">▭</span>Rectángulo</button>
+     <button class="tool" data-tool="circle"><span class="symbol">⚪</span>Círculo</button>
+     <button class="tool" data-tool="foam"><span class="symbol">🌟</span>Fomi</button>
+     <button class="tool" data-tool="paper"><span class="symbol">🗒️</span>Papel</button>
+     <button class="tool" data-tool="tape"><span class="symbol">🩹</span>Cinta</button>
+     <button class="tool" data-tool="eraser"><span class="symbol">🧽</span>Borrador</button>
+    </div>
+   </section>
+   <section class="section"><h2 class="sec-title">🎨 Tintas y materiales</h2>
+    <div class="group-box">
+     <label class="field-label" for="inkColor">Color actual</label>
+     <div class="swatches" id="swatches"></div>
+     <div class="color-row"><input type="color" id="inkColor" value="#275848" aria-label="Color personalizado"><span id="hexColor">#275848</span></div>
+     <div class="separator"></div>
+     <label class="field-label" for="brushSize">Grosor</label>
+     <div class="input-row"><input class="range" type="range" min="1" max="36" value="7" id="brushSize"><span class="value-pill" id="brushSizeValue">7</span></div>
+     <label class="field-label" for="inkOpacity" style="margin-top:12px">Opacidad</label>
+     <div class="input-row"><input class="range" type="range" min="10" max="100" value="100" id="inkOpacity"><span class="value-pill" id="opacityValue">100%</span></div>
+    </div>
+    <div class="group-box">
+     <label class="field-label" for="foamShape">Forma para el fomi / papel</label>
+     <select class="select" id="foamShape"><option value="star">⭐ Estrella</option><option value="heart">♥ Corazón</option><option value="circle">● Círculo</option><option value="rectangle">▭ Rectángulo</option><option value="triangle">▲ Triángulo</option><option value="leaf">🌿 Hoja</option></select>
+     <p class="subtle" style="margin:9px 0 0">El fomi tiene relieve y sombra. Arrastra sobre la cartulina para recortarlo al tamaño que quieras.</p>
+    </div>
+   </section>
+  </aside>
+  <main class="workspace" aria-label="Área de diseño de cartulina">
+   <div class="stage-top"><div class="tag" id="boardSizeLabel">📐 Cartulina horizontal · 60 × 40 cm</div>
+    <div class="zoomctl"><button id="zoomOut" title="Alejar">−</button><span id="zoomValue">100%</span><button id="zoomIn" title="Acercar">+</button><button id="zoomReset" title="Restablecer vista">⤢</button></div>
+   </div>
+   <div class="stage-scroll" id="stageScroll"><div class="artboard-holder" id="artboardHolder"><div class="artboard select-mode" id="artboard"><canvas id="canvas" width="1200" height="800" aria-label="Lienzo de cartulina para dibujar">Tu navegador no admite canvas.</canvas></div></div></div>
+   <div class="stage-note" id="toolHint">👆 Selecciona algo para moverlo; arrastra la esquina azul para cambiar su tamaño</div>
+  </main>
+  <aside class="sidebar right" aria-label="Opciones de cartulina y objetos">
+   <section class="section"><h2 class="sec-title">📋 Mi cartulina</h2>
+    <div class="group-box"><label class="field-label" for="orientation">Orientación</label><select class="select" id="orientation"><option value="landscape">Horizontal · 60 × 40 cm</option><option value="portrait">Vertical · 40 × 60 cm</option></select>
+      <label class="field-label" for="boardColor" style="margin-top:12px">Color de cartulina</label><div class="color-row"><input type="color" id="boardColor" value="#fff2d2"><span id="boardHex">#fff2d2</span></div>
+      <div class="swatches" id="paperSwatches" style="margin-top:12px;grid-template-columns:repeat(6,1fr)"></div>
+      <div class="option-row"><label for="showGrid">Ver cuadrícula guía</label><input type="checkbox" id="showGrid"></div>
+    </div>
+   </section>
+   <section class="section"><h2 class="sec-title">🔠 Textos y pegatinas</h2>
+    <div class="group-box">
+      <label class="field-label" for="textInput">Escribe tu título o información</label>
+      <textarea class="textarea" id="textInput" spellcheck="true" placeholder="Ej. MESOPITHECUS">MESOPITHECUS</textarea>
+      <div class="two" style="margin-top:8px"><select class="select" id="fontFamily"><option value="Trebuchet MS">Moderna</option><option value="Arial Black">Título grueso</option><option value="Georgia">Clásica</option><option value="Comic Sans MS">Divertida</option><option value="Courier New">Máquina</option></select><select class="select" id="fontSize"><option value="25">25 px</option><option value="34">34 px</option><option value="48" selected>48 px</option><option value="68">68 px</option><option value="88">88 px</option><option value="110">110 px</option></select></div>
+      <div class="two" style="margin-top:8px"><button class="btn primary" id="addTextBtn">＋ Poner texto</button><button class="btn" id="updateTextBtn" disabled>✏️ Editar elegido</button></div>
+    </div>
+    <div class="group-box"><label class="field-label" for="stickerSelect">Pegatinas y adornos</label><select class="select" id="stickerSelect"><option value="🐒">🐒 Mono</option><option value="🌿">🌿 Planta</option><option value="🦴">🦴 Fósil</option><option value="🍃">🍃 Hoja</option><option value="🌳">🌳 Árbol</option><option value="⭐">⭐ Estrella</option><option value="🪨">🪨 Piedra</option><option value="🍌">🍌 Plátano</option><option value="📌">📌 Chinche</option><option value="🌺">🌺 Flor</option><option value="🔎">🔎 Lupa</option></select><div class="two" style="margin-top:8px"><button class="btn" id="addStickerBtn">＋ Pegatina</button><label class="btn" style="text-align:center">📷 Foto<input type="file" id="imageInput" accept="image/*" class="hidden"></label></div></div>
+   </section>
+   <section class="section"><h2 class="sec-title">✂️ Editar y guardar</h2>
+    <div class="group-box"><div id="selectionLabel" class="hint">Selecciona un objeto para moverlo, cambiar su color o modificarlo.</div>
+      <div class="select-actions"><button class="btn tiny" id="duplicateBtn" disabled>⧉ Duplicar</button><button class="btn tiny" id="frontBtn" disabled>⬆ Al frente</button><button class="btn tiny" id="backBtn" disabled>⬇ Al fondo</button><button class="btn tiny warn" id="deleteBtn" disabled>✕ Quitar</button></div>
+      <div class="separator"></div>
+      <div class="two"><button class="btn tiny" id="saveBtnSide">💾 Proyecto</button><label class="btn tiny" style="text-align:center">📂 Abrir<input type="file" id="loadInput" accept="application/json,.json" class="hidden"></label></div>
+      <div class="two" style="margin-top:7px"><button class="btn tiny" id="templateBtnSide">🐒 Plantilla</button><button class="btn tiny warn" id="clearBtn">🗑 Limpiar todo</button></div>
+      <p class="subtle" style="margin:10px 0 0">PNG: imagen para imprimir. Proyecto: archivo editable para volver después. Tus cambios también se guardan automáticamente en este navegador.</p>
+    </div>
+    <div class="group-box"><h2 class="sec-title">🗂️ Capas de mi cartulina</h2><div class="layers-list" id="layersList"><div class="layer-empty">Todavía no hay elementos.</div></div><p class="subtle">Toca una capa para seleccionarla. El ojo muestra u oculta elementos. «Al frente» y «Al fondo» cambian el orden.</p></div>
+    <div class="hint"><strong>💡 Truco:</strong> agrega textos, dibujos y fomi; selecciónalos para arrastrarlos. Doble clic en un texto para editarlo. Usa la regla para líneas derechas.</div>
+   </section>
+  </aside>
+ </div>
+ <nav class="mobile-dock" aria-label="Herramientas rápidas"><button data-quick="select"><span>👆</span>Mover</button><button data-quick="marker"><span>🖊️</span>Plumón</button><button data-quick="pencil"><span>✏️</span>Lápiz</button><button data-quick="foam"><span>⭐</span>Fomi</button><button data-quick="text"><span>🔤</span>Texto</button><button data-quick="eraser"><span>🧽</span>Borrar</button></nav>
+ <footer class="footer"><span id="statusText">✨ Todo listo para crear</span><span><strong>Hecho para tu proyecto de inglés</strong> · funciona sin conexión</span></footer>
+</div>
 <script>
 (()=>{'use strict';
-const svg=document.getElementById('canvas'), group=document.getElementById('content'), stage=document.getElementById('stage'), ns='http://www.w3.org/2000/svg';
-const toolDefs=[['select','☝ Seleccionar'],['pencil','✏️ Lápiz'],['marker','🖊 Plumón'],['brush','🖌 Pincel'],['highlight','🟨 Resaltador'],['eraser','🧽 Borrador'],['line','📏 Regla'],['rect','▭ Rectángulo'],['circle','◯ Círculo'],['foam','⭐ Fomi'],['tape','🩹 Cinta'],['text','🔤 Texto'],['paper','🗒 Papel'],['image','🖼 Imagen']];
 const $=id=>document.getElementById(id);
-let items=[],selected=-1,tool='marker',drag=null,undo=[],bg='#fbf4cf';
-const uid=()=>Math.random().toString(36).slice(2);
-const getColor=()=>$('color').value, width=()=>Number($('size').value);
-function remember(){undo.push(JSON.stringify({items,bg}));if(undo.length>50)undo.shift()}
-function saveLocal(){try{localStorage.setItem('cartulina-studio-v1',JSON.stringify({items,bg}))}catch(e){}}
-function elem(name,attrs,container=group){const el=document.createElementNS(ns,name);Object.entries(attrs||{}).forEach(([k,v])=>el.setAttribute(k,v));container.appendChild(el);return el}
-function xy(e){let p=svg.createSVGPoint();p.x=e.clientX;p.y=e.clientY;return p.matrixTransform(svg.getScreenCTM().inverse())}
-function render(){stage.style.background=bg;group.replaceChildren();items.forEach((o,i)=>{const g=elem('g',{'data-i':i,opacity:o.opacity??1});if(o.type==='stroke'){elem('polyline',{points:o.points.map(p=>p.join(',')).join(' '),fill:'none',stroke:o.color,'stroke-width':o.size,'stroke-linejoin':'round','stroke-linecap':'round'},g)}
-else if(o.type==='line')elem('line',{x1:o.x,y1:o.y,x2:o.x2,y2:o.y2,stroke:o.color,'stroke-width':o.size,'stroke-linecap':'round'},g);
-else if(o.type==='rect'||o.type==='paper'||o.type==='tape')elem('rect',{x:o.x,y:o.y,width:o.w,height:o.h,fill:o.color,stroke:o.type==='paper'?'#775c45':'none','stroke-width':2,rx:o.type==='tape'?7:3},g);
-else if(o.type==='circle')elem('ellipse',{cx:o.x+o.w/2,cy:o.y+o.h/2,rx:Math.abs(o.w/2),ry:Math.abs(o.h/2),fill:o.color},g);
-else if(o.type==='foam'){const cx=o.x+o.w/2,cy=o.y+o.h/2,outer=Math.min(Math.abs(o.w),Math.abs(o.h))/2;let pts=[];for(let k=0;k<10;k++){let a=-Math.PI/2+k*Math.PI/5,r=k%2?outer*.48:outer;pts.push((cx+Math.cos(a)*r)+','+(cy+Math.sin(a)*r))}elem('polygon',{points:pts.join(' '),fill:o.color,stroke:'#0002','stroke-width':4},g)}
-else if(o.type==='text'){const t=elem('text',{x:o.x,y:o.y,fill:o.color,'font-size':o.size,'font-family':'Arial,sans-serif','font-weight':'800'},g);t.textContent=o.text;}
-else if(o.type==='image')elem('image',{href:o.src,x:o.x,y:o.y,width:o.w,height:o.h,preserveAspectRatio:'xMidYMid meet'},g);
-if(i===selected){let bb;try{bb=g.getBBox()}catch(e){}if(bb)elem('rect',{x:bb.x-5,y:bb.y-5,width:Math.max(bb.width+10,15),height:Math.max(bb.height+10,15),fill:'none',stroke:'#1686e0','stroke-width':2,'stroke-dasharray':'8 5','pointer-events':'none'},g)}});saveLocal()}
-function add(o){remember();items.push({...o,id:uid()});selected=items.length-1;render()}
-function textAt(x=110,y=130){add({type:'text',x,y,text:$('text').value||'Your text',size:Number($('fontSize').value),color:getColor()})}
-function setTool(t){tool=t;document.querySelectorAll('[data-tool]').forEach(b=>b.classList.toggle('active',b.dataset.tool===t))}
-toolDefs.forEach(([id,label])=>{let b=document.createElement('button');b.textContent=label;b.dataset.tool=id;b.onclick=()=>{setTool(id);if(id==='image')$('file').click()};$('tools').appendChild(b)});
-['#245b44','#d93d38','#e8a332','#3379c9','#7c48b1','#111827','#ffffff','#f7bdcd','#a8d9a6','#fbec73'].forEach(c=>{let b=document.createElement('button');b.className='swatch';b.style.background=c;b.title=c;b.onclick=()=>{$('color').value=c};$('swatches').appendChild(b)});
-$('size').oninput=()=>$('sizeLabel').textContent=$('size').value;
-$('paper').oninput=e=>{bg=e.target.value;render()};
-svg.addEventListener('pointerdown',e=>{e.preventDefault();svg.setPointerCapture(e.pointerId);let p=xy(e), node=e.target.closest('[data-i]'),idx=node?Number(node.getAttribute('data-i')):-1;if(tool==='select'){selected=idx;if(idx>=0){remember();drag={kind:'move',idx,start:p,initial:JSON.parse(JSON.stringify(items[idx]))}}render();return}
-if(tool==='eraser'){if(idx>=0){remember();items.splice(idx,1);selected=-1;render()}return}
-if(tool==='text'){textAt(p.x,p.y);return}if(tool==='image'){$('file').click();return}
-remember();let color=getColor(),sz=width();let o;
-if(['pencil','marker','brush','highlight'].includes(tool)){o={type:'stroke',points:[[p.x,p.y]],color:tool==='pencil'?'#34363d':color,size:tool==='pencil'?Math.max(1,sz/3):tool==='brush'?sz*2:tool==='highlight'?sz*3:sz,opacity:tool==='highlight'?.35:1}}
-else if(tool==='line')o={type:'line',x:p.x,y:p.y,x2:p.x,y2:p.y,color,size:Math.max(2,sz/2)};
-else{o={type:tool,x:p.x,y:p.y,w:1,h:1,color,opacity:tool==='tape'?.45:1}}
-items.push({...o,id:uid()});selected=items.length-1;drag={kind:'draw',idx:selected,start:p};render()});
-svg.addEventListener('pointermove',e=>{if(!drag)return;let p=xy(e),o=items[drag.idx];if(!o)return;if(drag.kind==='move'){let dx=p.x-drag.start.x,dy=p.y-drag.start.y,init=drag.initial;if(o.type==='stroke')o.points=init.points.map(q=>[q[0]+dx,q[1]+dy]);else{if(typeof init.x==='number')o.x=init.x+dx;if(typeof init.y==='number')o.y=init.y+dy;if(o.type==='line'){o.x2=init.x2+dx;o.y2=init.y2+dy}}}else if(o.type==='stroke')o.points.push([p.x,p.y]);else if(o.type==='line'){o.x2=p.x;o.y2=p.y}else{o.x=Math.min(drag.start.x,p.x);o.y=Math.min(drag.start.y,p.y);o.w=Math.max(1,Math.abs(p.x-drag.start.x));o.h=Math.max(1,Math.abs(p.y-drag.start.y))}render()});
-svg.addEventListener('pointerup',()=>{drag=null;render()});svg.addEventListener('pointercancel',()=>{drag=null;render()});
-$('undo').onclick=()=>{let old=undo.pop();if(old){let d=JSON.parse(old);items=d.items;bg=d.bg;selected=-1;render()}};
-$('delete').onclick=()=>{if(selected<0)return;remember();items.splice(selected,1);selected=-1;render()};
-$('front').onclick=()=>{if(selected<0)return;remember();items.push(items.splice(selected,1)[0]);selected=items.length-1;render()};
-$('back').onclick=()=>{if(selected<0)return;remember();items.unshift(items.splice(selected,1)[0]);selected=0;render()};
-$('addText').onclick=()=>textAt(90,130);
-$('clear').onclick=()=>{if(!confirm('¿Vaciar la cartulina?'))return;remember();items=[];bg='#fbf4cf';selected=-1;render()};
-function download(blob,name){const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-$('save').onclick=()=>{let clone=svg.cloneNode(true),r=document.createElementNS(ns,'rect');r.setAttribute('width','1000');r.setAttribute('height','707');r.setAttribute('fill',bg);clone.insertBefore(r,clone.firstChild);clone.querySelectorAll('[stroke-dasharray]').forEach(n=>n.remove());clone.setAttribute('width','2000');clone.setAttribute('height','1414');let data=new XMLSerializer().serializeToString(clone),img=new Image(),url=URL.createObjectURL(new Blob([data],{type:'image/svg+xml'}));img.onload=()=>{let c=document.createElement('canvas');c.width=2000;c.height=1414;c.getContext('2d').drawImage(img,0,0,c.width,c.height);c.toBlob(b=>{if(b)download(b,'Cartulina-Mesopithecus.png')});URL.revokeObjectURL(url)};img.src=url};
-$('jsonSave').onclick=()=>download(new Blob([JSON.stringify({items,bg})],{type:'application/json'}),'Cartulina-Studio.json');
-$('jsonLoad').onclick=()=>$('jsonFile').click();$('jsonFile').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let d=JSON.parse(await f.text());if(!Array.isArray(d.items))throw Error();remember();items=d.items;bg=d.bg||bg;render()}catch(e){alert('Archivo de proyecto inválido')}};
-$('addImage').onclick=()=>$('file').click();$('file').onchange=e=>{const f=e.target.files[0];if(!f)return;const reader=new FileReader();reader.onload=()=>add({type:'image',x:310,y:140,w:380,h:280,src:reader.result});reader.readAsDataURL(f);e.target.value=''};
-$('template').onclick=()=>{remember();selected=-1;bg='#e7f1d5';items=[];const A=(o)=>items.push({id:uid(),...o});
-A({type:'rect',x:35,y:25,w:930,h:100,color:'#21543c'});A({type:'text',x:290,y:88,text:'MESOPITHECUS',color:'#ffffff',size:64});A({type:'text',x:302,y:120,text:'THE PREHISTORIC MONKEY',color:'#f8cc64',size:22});
-const sections=[['WHAT WAS IT?','An extinct prehistoric monkey.'],['WHEN DID IT LIVE?','About 8 to 3 million years ago.'],['WHERE DID IT LIVE?','Europe and Asia.'],['WHAT DID IT EAT?','Fruits, leaves and seeds.'],['PHYSICAL FEATURES','Long tail and a slender body.'],['FUN FACT!','Its name means "middle monkey".']];
-sections.forEach((s,i)=>{let left=i%2===0,x=left?40:680,y=155+Math.floor(i/2)*172;A({type:'rect',x,y,w:280,h:139,color:'#ffffff'});A({type:'rect',x:x+5,y:y+7,w:270,h:32,color:'#e9bd67'});A({type:'text',x:x+12,y:y+30,text:s[0],size:20,color:'#22523c'});let words=s[1].split(' '),lines=[''];words.forEach(w=>{if((lines.at(-1)+' '+w).length>26)lines.push(w);else lines[lines.length-1]+=' '+w});lines.forEach((t,j)=>A({type:'text',x:x+10,y:y+73+j*29,text:t.trim(),size:19,color:'#374151'}))});
-A({type:'circle',x:355,y:220,w:290,h:290,color:'#cce1b2'});A({type:'text',x:402,y:317,text:'🐒',size:110,color:'#21543c'});A({type:'text',x:378,y:470,text:'ADD A PHOTO',size:26,color:'#21543c'});A({type:'text',x:411,y:502,text:'OR DRAWING',size:21,color:'#21543c'});render()};
-document.addEventListener('keydown',e=>{if(e.target.matches('input'))return;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();$('undo').click()}if(e.key==='Delete')$('delete').click()});
-try{const d=JSON.parse(localStorage.getItem('cartulina-studio-v1')||'null');if(d&&Array.isArray(d.items)){items=d.items;bg=d.bg||bg}}catch(e){}
-setTool('marker');render();
+const canvas=$('canvas'),ctx=canvas.getContext('2d'),artboard=$('artboard'),holder=$('artboardHolder');
+const PALETTE=['#263b37','#ffffff','#000000','#e85257','#f0aa2a','#fbdd62','#4bb88f','#3484ce','#8651bc','#f59ab3','#805b43','#c0d6e3','#5a714f','#d96225','#87d3d8','#eecdb3'];
+const PAPERS=['#fff2d2','#fffef5','#d9f0de','#e9dff9','#d8ecfc','#ffdce4','#f3d3a2','#24282c','#f5f5f5','#dce8b3','#e3c2a5','#bcd8d1'];
+const hints={select:'👆 Toca un elemento para moverlo; usa su esquina para hacerlo más grande',pencil:'✏️ Dibuja libremente, como con un lápiz',marker:'🖊️ Plumón de trazo grueso para carteles',highlighter:'🖍️ Resalta frases con tinta semitransparente',brush:'🖌️ Pinta trazos anchos con el pincel',line:'📏 Arrastra para crear una línea recta con la regla',rectangle:'▭ Arrastra para dibujar un rectángulo',circle:'⚪ Arrastra para dibujar un círculo o elipse',foam:'🌟 Arrastra para colocar un recorte de fomi con relieve',paper:'🗒️ Recorta papel de colores arrastrando',tape:'🩹 Coloca cinta adhesiva semitransparente',eraser:'🧽 Toca o frota un elemento para borrarlo',text:'🔠 Toca la cartulina donde quieras poner el texto',sticker:'🌿 Toca la cartulina para colocar la pegatina'};
+const DEFAULT={boardColor:'#fff2d2',orientation:'landscape',objects:[]};
+let model=JSON.parse(JSON.stringify(DEFAULT)), tool='select',ink='#275848',thickness=7,opacity=1,foamShape='star',sticker='🐒',zoom=100,grid=false,selection=null,active=null,preview=null,needsDraw=false;
+let history=[],future=[],nextId=1, autosaveTimer=null;
+const imageCache=new Map();
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const clone=v=>JSON.parse(JSON.stringify(v));
+const dims=()=>model.orientation==='portrait'?{w:800,h:1200}:{w:1200,h:800};
+const uid=()=>nextId++;
+const selected=()=>model.objects.find(o=>o.id===selection);
+const fontString=o=>`${o.bold?'bold ':''}${o.fontSize||48}px "${o.font||'Trebuchet MS'}", sans-serif`;
+function message(s){$('statusText').textContent=s;}
+function saveLocal(){try{localStorage.setItem('cartulina_studio_v2',JSON.stringify({model,nextId}));}catch(e){if(e?.name==='QuotaExceededError')message('⚠️ Almacenamiento lleno: usa Guardar proyecto.');}}
+function changed(){clearTimeout(autosaveTimer);autosaveTimer=setTimeout(saveLocal,350);updateButtons();}
+function remember(){history.push(JSON.stringify(model));if(history.length>55)history.shift();future.length=0;changed();}
+function undo(){if(!history.length)return;future.push(JSON.stringify(model));model=JSON.parse(history.pop());selection=null;afterState();message('↶ Cambio deshecho');}
+function redo(){if(!future.length)return;history.push(JSON.stringify(model));model=JSON.parse(future.pop());selection=null;afterState();message('↷ Cambio recuperado');}
+function afterState(){resizeBoard();updateProps();updateButtons();render();changed();}
+function add(o){remember();o.id=uid();model.objects.push(o);selection=o.id;setTool('select');afterState();return o;}
+function updateButtons(){const s=selected(),has=!!s;$('undoBtn').disabled=!history.length;$('redoBtn').disabled=!future.length;for(const id of ['duplicateBtn','frontBtn','backBtn','deleteBtn'])$(id).disabled=!has;$('updateTextBtn').disabled=!(s&&s.type==='text');refreshLayers();}
+function setTool(t){tool=t;document.querySelectorAll('[data-tool]').forEach(b=>b.classList.toggle('active',b.dataset.tool===tool));document.querySelectorAll('[data-quick]').forEach(b=>b.classList.toggle('active',b.dataset.quick===tool));artboard.classList.toggle('select-mode',tool==='select');$('toolHint').textContent=hints[tool]||'';message('Herramienta: '+({select:'seleccionar',marker:'plumón',foam:'fomi',line:'regla'}[tool]||tool));}
+function sizeCanvas(){const {w,h}=dims();if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}artboard.style.aspectRatio=`${w}/${h}`;$('boardSizeLabel').textContent=model.orientation==='portrait'?'📐 Cartulina vertical · 40 × 60 cm':'📐 Cartulina horizontal · 60 × 40 cm';}
+function resizeBoard(){sizeCanvas();let pct=zoom/100;holder.style.width=(pct*100)+'%';$('zoomValue').textContent=zoom+'%';render();}
+function coord(e){const r=canvas.getBoundingClientRect();return{x:clamp((e.clientX-r.left)*canvas.width/r.width,0,canvas.width),y:clamp((e.clientY-r.top)*canvas.height/r.height,0,canvas.height)};}
+function drawGrid(){ctx.save();for(let x=0;x<=canvas.width;x+=25){ctx.strokeStyle=x%100===0?'#53645c28':'#52625b12';ctx.lineWidth=x%100===0?1.7:1;ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,canvas.height);ctx.stroke();}for(let y=0;y<=canvas.height;y+=25){ctx.strokeStyle=y%100===0?'#53645c28':'#52625b12';ctx.lineWidth=y%100===0?1.7:1;ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(canvas.width,y);ctx.stroke();}ctx.restore();}
+function drawScene(target,{ui=true}={}){const real=ctx; // Drawing always uses the given canvas context, including exports.
+ target.save();target.fillStyle=model.boardColor;target.fillRect(0,0,canvas.width,canvas.height);
+ for(const o of model.objects)if(!o.hidden)drawObject(target,o);
+ if(ui){if(grid)drawGridOn(target);if(preview)drawObject(target,preview);if(selected())drawSelection(target,selected());}
+ target.restore();}
+function drawGridOn(c){c.save();for(let x=0;x<=canvas.width;x+=25){c.strokeStyle=x%100===0?'#53645c30':'#52625b13';c.lineWidth=x%100===0?1.7:1;c.beginPath();c.moveTo(x,0);c.lineTo(x,canvas.height);c.stroke();}for(let y=0;y<=canvas.height;y+=25){c.strokeStyle=y%100===0?'#53645c30':'#52625b13';c.lineWidth=y%100===0?1.7:1;c.beginPath();c.moveTo(0,y);c.lineTo(canvas.width,y);c.stroke();}c.restore();}
+function render(){if(needsDraw)return;needsDraw=true;requestAnimationFrame(()=>{needsDraw=false;drawScene(ctx,{ui:true});});}
+function pathShape(c,shape,x,y,w,h){const rx=x+w/2,ry=y+h/2;c.beginPath();switch(shape){
+ case 'circle':c.ellipse(rx,ry,Math.max(.1,w/2),Math.max(.1,h/2),0,0,Math.PI*2);break;
+ case 'triangle':c.moveTo(rx,y);c.lineTo(x+w,y+h);c.lineTo(x,y+h);c.closePath();break;
+ case 'star':{const r=Math.min(w,h)/2,inner=r*.46;for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,rr=k%2?inner:r;const px=rx+rr*Math.cos(a)*w/Math.max(.1,Math.min(w,h)),py=ry+rr*Math.sin(a)*h/Math.max(.1,Math.min(w,h));if(k===0)c.moveTo(px,py);else c.lineTo(px,py);}c.closePath();break;}
+ case 'heart':c.moveTo(rx,y+h*.93);c.bezierCurveTo(x-w*.12,y+h*.37,x+w*.05,y-h*.08,rx,y+h*.25);c.bezierCurveTo(x+w*.95,y-h*.08,x+w*1.12,y+h*.37,rx,y+h*.93);c.closePath();break;
+ case 'leaf':c.moveTo(x,y+h);c.bezierCurveTo(x-w*.07,y+h*.3,x+w*.45,y-h*.12,x+w,y);c.bezierCurveTo(x+w*.95,y+h*.7,x+w*.55,y+h*1.11,x,y+h);c.closePath();break;
+ default:c.rect(x,y,w,h);
+ }}
+function drawObject(c,o){c.save();c.globalAlpha=clamp(o.opacity??1,0,1);
+ if(o.type==='stroke'){
+   if(!o.points?.length){c.restore();return;}
+   const kind=o.kind||'pencil';c.lineCap='round';c.lineJoin='round';c.strokeStyle=o.color||'#222';c.fillStyle=o.color||'#222';c.lineWidth=(o.size||7)*({pencil:.95,marker:2.55,highlighter:5.5,brush:3.25}[kind]||1);
+   if(kind==='highlighter')c.globalAlpha*=.28;else if(kind==='marker')c.globalAlpha*=.88;else if(kind==='pencil')c.globalAlpha*=.9;
+   c.beginPath();c.moveTo(o.points[0].x,o.points[0].y);for(let i=1;i<o.points.length;i++)c.lineTo(o.points[i].x,o.points[i].y);
+   if(o.points.length===1){c.arc(o.points[0].x,o.points[0].y,c.lineWidth/2,0,Math.PI*2);c.fill();}else c.stroke();
+ }else if(o.type==='line'){
+   c.lineWidth=o.size||5;c.lineCap='round';c.strokeStyle=o.color;c.beginPath();c.moveTo(o.x,o.y);c.lineTo(o.x+o.w,o.y+o.h);c.stroke();
+ }else if(['rectangle','circle','foam','paper','tape'].includes(o.type)){
+   const kind=o.type,sh=(kind==='circle'?'circle':kind==='rectangle'?'rectangle':o.shape||'rectangle');
+   if(kind==='foam'){c.shadowColor='#1e273c65';c.shadowBlur=16;c.shadowOffsetX=3;c.shadowOffsetY=9;}
+   if(kind==='paper'){c.shadowColor='#29313a36';c.shadowBlur=7;c.shadowOffsetY=4;}
+   pathShape(c,sh,o.x,o.y,o.w,o.h);c.fillStyle=o.color||'#fff';if(kind==='tape')c.globalAlpha*=.42;c.fill();
+   c.shadowColor='transparent';c.shadowBlur=0;c.shadowOffsetY=0;c.shadowOffsetX=0;
+   if(kind==='foam'){c.save();pathShape(c,sh,o.x,o.y,o.w,o.h);c.clip();const gr=c.createLinearGradient(o.x,o.y,o.x+o.w,o.y+o.h);gr.addColorStop(0,'#ffffff60');gr.addColorStop(.38,'#ffffff10');gr.addColorStop(1,'#0000001b');c.fillStyle=gr;c.fillRect(o.x,o.y,o.w,o.h);c.restore();c.lineWidth=3;c.strokeStyle='#ffffff73';pathShape(c,sh,o.x+2,o.y+2,Math.max(1,o.w-4),Math.max(1,o.h-4));c.stroke();}
+   else if(kind==='paper'){c.strokeStyle='#6d665e4c';c.lineWidth=2;c.stroke();}
+   else if(kind==='tape'){c.save();pathShape(c,sh,o.x,o.y,o.w,o.h);c.clip();c.strokeStyle='#ffffff55';c.lineWidth=4;for(let i=-o.h;i<o.w+o.h;i+=24){c.beginPath();c.moveTo(o.x+i,o.y);c.lineTo(o.x+i+o.h,o.y+o.h);c.stroke();}c.restore();c.strokeStyle='#ffffff8a';c.lineWidth=2;c.stroke();}
+   else{c.lineWidth=o.size||3;c.strokeStyle=o.color||'#333';c.stroke();}
+ }else if(o.type==='text'){
+   const fs=o.fontSize||48;c.font=fontString(o);c.textBaseline='top';c.fillStyle=o.color||'#333';const lines=wrapText(c,o.text||'',Math.max(20,o.w-16));let yy=o.y+8;const maxY=o.y+o.h-4;
+   for(const line of lines){if(yy+fs>maxY)break;let xx=o.x+8;if(o.align==='center')xx=o.x+o.w/2;c.textAlign=o.align||'left';c.fillText(line,xx,yy,Math.max(20,o.w-16));yy+=fs*1.2;}
+ }else if(o.type==='sticker'){
+   c.font=`${Math.floor(Math.min(o.w,o.h)*.85)}px 'Apple Color Emoji','Segoe UI Emoji',sans-serif`;c.textAlign='center';c.textBaseline='middle';c.fillText(o.emoji||'⭐',o.x+o.w/2,o.y+o.h/2);
+ }else if(o.type==='image'){
+   let im=imageCache.get(o.src);if(!im){im=new Image();imageCache.set(o.src,im);im.onload=()=>render();im.src=o.src;}if(im.complete&&im.naturalWidth)c.drawImage(im,o.x,o.y,o.w,o.h);else{c.fillStyle='#e0e6ea';c.fillRect(o.x,o.y,o.w,o.h);c.fillStyle='#344';c.font='24px sans-serif';c.fillText('📷',o.x+20,o.y+20);}
+ }
+ c.restore();}
+function wrapText(c,text,maxWidth){let out=[];for(const line of String(text).split('\n')){if(line===''){out.push('');continue;}let current='';for(const word of line.split(/\s+/)){const test=current?current+' '+word:word;if(current&&c.measureText(test).width>maxWidth){out.push(current);current=word;}else current=test;}out.push(current);}return out;}
+function bounds(o){if(o.type==='stroke'){let xx=o.points.map(p=>p.x),yy=o.points.map(p=>p.y);let minX=Math.min(...xx),maxX=Math.max(...xx),minY=Math.min(...yy),maxY=Math.max(...yy);return{x:minX-6,y:minY-6,w:Math.max(13,maxX-minX+12),h:Math.max(13,maxY-minY+12)};}if(o.type==='line')return{x:Math.min(o.x,o.x+o.w),y:Math.min(o.y,o.y+o.h),w:Math.max(15,Math.abs(o.w)),h:Math.max(15,Math.abs(o.h))};return{x:o.x,y:o.y,w:o.w,h:o.h};}
+function drawSelection(c,o){if(o.hidden)return;const b=bounds(o);c.save();c.strokeStyle='#167cbd';c.lineWidth=3;c.setLineDash([12,7]);c.strokeRect(b.x-5,b.y-5,b.w+10,b.h+10);c.setLineDash([]);c.fillStyle='#fff';c.strokeStyle='#0879b3';c.lineWidth=4;c.fillRect(b.x+b.w-7,b.y+b.h-7,17,17);c.strokeRect(b.x+b.w-7,b.y+b.h-7,17,17);c.restore();}
+function distSeg(p,a,b){const dx=b.x-a.x,dy=b.y-a.y,L=dx*dx+dy*dy;if(!L)return Math.hypot(p.x-a.x,p.y-a.y);const t=clamp(((p.x-a.x)*dx+(p.y-a.y)*dy)/L,0,1);return Math.hypot(p.x-(a.x+t*dx),p.y-(a.y+t*dy));}
+function hit(o,p,r=0){if(o.type==='line')return distSeg(p,{x:o.x,y:o.y},{x:o.x+o.w,y:o.y+o.h})<Math.max(16,(o.size||3)/2+8+r);if(o.type==='stroke'){for(let i=1;i<o.points.length;i++)if(distSeg(p,o.points[i-1],o.points[i])<Math.max(15,(o.size||6)*.8+r))return true;return o.points.length===1&&Math.hypot(o.points[0].x-p.x,o.points[0].y-p.y)<18;}const b=bounds(o);return p.x>=b.x-r&&p.x<=b.x+b.w+r&&p.y>=b.y-r&&p.y<=b.y+b.h+r;}
+function hitTop(p){for(let i=model.objects.length-1;i>=0;i--)if(!model.objects[i].hidden&&!model.objects[i].locked&&hit(model.objects[i],p))return model.objects[i];return null;}
+function onPointerDown(e){if(e.button!==undefined&&e.button!==0)return;e.preventDefault();canvas.setPointerCapture(e.pointerId);const p=coord(e);
+ if(tool==='select'){
+   const s=selected();if(s){const b=bounds(s);if(Math.abs(p.x-(b.x+b.w))<25&&Math.abs(p.y-(b.y+b.h))<25){active={mode:'resize',start:p,original:clone(s),history:false};artboard.classList.add('dragging');return;}}
+   const obj=hitTop(p);selection=obj?.id||null;updateProps();render();if(obj){active={mode:'move',start:p,original:clone(obj),history:false};artboard.classList.add('dragging');}return;
+ }
+ if(tool==='eraser'){active={mode:'eraser',history:false};erase(p);return;}
+ if(['pencil','marker','highlighter','brush'].includes(tool)){
+   remember();const o={id:uid(),type:'stroke',kind:tool,points:[p],color:ink,size:thickness,opacity};model.objects.push(o);active={mode:'stroke',obj:o};selection=null;updateProps();render();return;
+ }
+ if(['text','sticker'].includes(tool)){if(tool==='text')insertText(p);else insertSticker(p);return;}
+ active={mode:'create',start:p,current:p,kind:tool};preview=makePreview(p,p,tool);selection=null;updateProps();render();}
+function constrainLine(a,b,shift){if(!shift)return b;const ang=Math.atan2(b.y-a.y,b.x-a.x),r=Math.hypot(b.x-a.x,b.y-a.y),step=Math.PI/12,na=Math.round(ang/step)*step;return{x:a.x+Math.cos(na)*r,y:a.y+Math.sin(na)*r};}
+function makePreview(a,b,kind){if(kind==='line')return{id:-1,type:'line',x:a.x,y:a.y,w:b.x-a.x,h:b.y-a.y,color:ink,size:thickness,opacity};const x=Math.min(a.x,b.x),y=Math.min(a.y,b.y),w=Math.abs(b.x-a.x),h=Math.abs(b.y-a.y);return{id:-1,type:kind,x,y,w:Math.max(1,w),h:Math.max(1,h),shape:foamShape,color:ink,size:thickness,opacity};}
+function moveObj(o,orig,dx,dy){if(o.type==='stroke'){o.points=orig.points.map(p=>({x:p.x+dx,y:p.y+dy}));}else{o.x=orig.x+dx;o.y=orig.y+dy;}}
+function resizeObj(o,orig,dx,dy){if(o.type==='line'){o.w=orig.w+dx;o.h=orig.h+dy;return;}if(o.type==='stroke'){const b=bounds(orig),nw=Math.max(15,b.w+dx),nh=Math.max(15,b.h+dy);o.points=orig.points.map(p=>({x:b.x+(p.x-b.x)*nw/b.w,y:b.y+(p.y-b.y)*nh/b.h}));return;}o.w=Math.max(28,orig.w+dx);o.h=Math.max(28,orig.h+dy);}
+function onPointerMove(e){if(!active)return;e.preventDefault();const p=coord(e),a=active;
+ if(a.mode==='eraser'){erase(p);return;}
+ if(a.mode==='stroke'){const pts=a.obj.points,last=pts[pts.length-1];if(Math.hypot(p.x-last.x,p.y-last.y)>2.1){pts.push(p);render();changed();}return;}
+ if(a.mode==='create'){a.current=a.kind==='line'?constrainLine(a.start,p,e.shiftKey):p;preview=makePreview(a.start,a.current,a.kind);render();return;}
+ if(a.mode==='move'||a.mode==='resize'){const obj=selected();if(!obj)return;const dx=p.x-a.start.x,dy=p.y-a.start.y;if(!a.history&&Math.hypot(dx,dy)>1.5){remember();a.history=true;}if(a.history){if(a.mode==='move')moveObj(obj,a.original,dx,dy);else resizeObj(obj,a.original,dx,dy);render();changed();}return;}}
+function onPointerUp(e){if(!active)return;e.preventDefault();const a=active;active=null;artboard.classList.remove('dragging');
+ if(a.mode==='create'){
+   const p=a.current,dist=Math.hypot(p.x-a.start.x,p.y-a.start.y);let o=makePreview(a.start,p,a.kind);
+   if(dist<12){const width=(a.kind==='line'?180:a.kind==='tape'?125:200),height=(a.kind==='line'?0:a.kind==='tape'?48:135);o={...o,x:a.start.x-(a.kind==='line'?0:width/2),y:a.start.y-(a.kind==='line'?0:height/2),w:width,h:height};}
+   if(a.kind==='tape')o.shape='rectangle';preview=null;add(o);message('✅ Material colocado en la cartulina');
+ }else if(a.mode==='stroke'){changed();message('✅ Trazo agregado');}
+ else if(a.mode==='eraser'){changed();}
+ else if(a.mode==='move'||a.mode==='resize'){updateProps();changed();}
+ render();}
+function erase(p){const obj=hitTop(p);if(!obj)return;if(!active.history){remember();active.history=true;}model.objects.splice(model.objects.indexOf(obj),1);if(selection===obj.id)selection=null;updateProps();render();changed();}
+function putInCenter(o){return add(o);}
+function makeText(p,text,size,opts={}){const fs=size||48;const w=clamp(opts.w||Math.max(270,Math.min(900,String(text).length*fs*.51)),150,canvas.width-30);const h=opts.h||Math.max(78,Math.ceil(String(text).split('\n').length*fs*1.25+22));return{id:uid(),type:'text',x:clamp(p.x,0,canvas.width-80),y:clamp(p.y,0,canvas.height-40),w:Math.min(w,canvas.width-p.x+10),h,fontSize:fs,font:opts.font||$('fontFamily').value,text,color:opts.color||ink,opacity:1,bold:!!opts.bold,align:opts.align||'left'};}
+function insertText(p){const text=$('textInput').value.trim()||'Escribe aquí';const fs=Number($('fontSize').value);const o=makeText(p,text,fs);add(o);message('🔠 Texto agregado. Doble clic para editar.');}
+function insertSticker(p){add({type:'sticker',x:p.x-47,y:p.y-47,w:94,h:94,emoji:sticker,opacity:1});message('🌿 Pegatina colocada');}
+function updateProps(){const s=selected(),label=$('selectionLabel');if(!s){label.textContent='Selecciona un objeto para moverlo, cambiar su color o modificarlo.';}else{const names={stroke:'trazo',foam:'fomi',paper:'papel',tape:'cinta',text:'texto',line:'línea',image:'imagen',sticker:'pegatina',rectangle:'rectángulo',circle:'círculo'};label.textContent=`✅ Elegiste ${names[s.type]||s.type}. Puedes moverlo o agrandarlo con la esquina azul.`;if(s.type==='text'){$('textInput').value=s.text;$('fontSize').value=String([...$('fontSize').options].map(x=>Number(x.value)).reduce((a,b)=>Math.abs(b-s.fontSize)<Math.abs(a-s.fontSize)?b:a,25));$('fontFamily').value=s.font||'Trebuchet MS';}if(s.color){ink=s.color;$('inkColor').value=ink;updateSwatch();}if(s.size){thickness=clamp(s.size,1,36);$('brushSize').value=thickness;$('brushSizeValue').textContent=thickness;}}updateButtons();}
+function updateSwatch(){document.querySelectorAll('#swatches .swatch').forEach(b=>b.classList.toggle('selected',b.dataset.color.toLowerCase()===ink.toLowerCase()));$('hexColor').textContent=ink.toUpperCase();}
+function makeSwatches(){for(const c of PALETTE){const b=document.createElement('button');b.className='swatch';b.type='button';b.dataset.color=c;b.style.background=c;b.title='Color '+c;b.setAttribute('aria-label','Elegir color '+c);b.addEventListener('click',()=>changeInk(c));$('swatches').appendChild(b);}for(const c of PAPERS){const b=document.createElement('button');b.className='swatch';b.type='button';b.style.background=c;b.title='Cartulina '+c;b.setAttribute('aria-label','Cartulina '+c);b.addEventListener('click',()=>changePaper(c));$('paperSwatches').appendChild(b);}updateSwatch();}
+function changeInk(c){ink=c;$('inkColor').value=c;updateSwatch();const s=selected();if(s&&s.color){remember();s.color=c;render();changed();}}
+function changePaper(c){if(model.boardColor===c)return;remember();model.boardColor=c;$('boardColor').value=c;$('boardHex').textContent=c.toUpperCase();render();changed();}
+function downloadBlob(blob,name){if(window.CartulinaAndroid&&typeof window.CartulinaAndroid.saveBase64==='function'){const reader=new FileReader();reader.onload=()=>window.CartulinaAndroid.saveBase64(name,blob.type||'application/octet-stream',String(reader.result).split(',')[1]);reader.readAsDataURL(blob);return;}const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+function exportPng(){const t=document.createElement('canvas');t.width=canvas.width*2;t.height=canvas.height*2;const c=t.getContext('2d');c.scale(2,2);drawScene(c,{ui:false});t.toBlob(blob=>{if(blob){downloadBlob(blob,'Mi_Cartulina_Mesopithecus.png');message('✅ Imagen PNG exportada para imprimir');}},'image/png');}
+function saveProject(){const blob=new Blob([JSON.stringify({format:'cartulina-studio-v2',model,nextId},null,2)],{type:'application/json'});downloadBlob(blob,'Mi_Cartulina_Editable.json');message('✅ Proyecto editable guardado');}
+async function loadProject(file){try{if(file.size>25*1024*1024)throw Error('El archivo es demasiado grande');const obj=JSON.parse(await file.text());if(!obj.model||!Array.isArray(obj.model.objects)||!['portrait','landscape'].includes(obj.model.orientation))throw Error('Formato no válido');remember();model=obj.model;nextId=Number(obj.nextId)||Math.max(1,...model.objects.map(o=>Number(o.id)||0))+1;selection=null;$('orientation').value=model.orientation;$('boardColor').value=model.boardColor;$('boardHex').textContent=model.boardColor.toUpperCase();afterState();message('📂 Proyecto abierto correctamente');}catch(err){alert('No pude abrir el proyecto: '+err.message);}}
+function setOrientation(o){if(model.orientation===o)return;remember();const prev=dims();model.orientation=o;const next=dims(),sx=next.w/prev.w,sy=next.h/prev.h;for(const item of model.objects){if(item.type==='stroke')item.points.forEach(p=>{p.x*=sx;p.y*=sy;});else{item.x*=sx;item.y*=sy;item.w*=sx;item.h*=sy;}if(item.type==='text')item.fontSize*=Math.min(sx,sy);}selection=null;resizeBoard();updateProps();changed();}
+function deleteSelected(){const obj=selected();if(!obj)return;remember();model.objects=model.objects.filter(o=>o.id!==selection);selection=null;updateProps();render();changed();}
+function duplicate(){const obj=selected();if(!obj)return;const copy=clone(obj);copy.id=uid();moveObj(copy,clone(copy),25,25);add(copy);}
+function changeOrder(which){const obj=selected();if(!obj)return;remember();model.objects.splice(model.objects.indexOf(obj),1);if(which==='front')model.objects.push(obj);else model.objects.unshift(obj);render();changed();}
+function clearBoard(){if(!model.objects.length)return;if(!confirm('¿Borrar todos los dibujos y textos de la cartulina?'))return;remember();model.objects=[];selection=null;updateProps();render();changed();}
+function setTemplate(){if(model.objects.length&&!confirm('La plantilla reemplazará tu diseño actual. ¿Continuar?'))return;remember();model.orientation='landscape';model.boardColor='#e7f3dc';model.objects=[];selection=null;nextId=Math.max(nextId,1);
+ const put=o=>{o.id=uid();model.objects.push(o);};
+ const shape=(type,x,y,w,h,color,shape='rectangle')=>put({type,x,y,w,h,color,shape,opacity:1,size:2});
+ const txt=(text,x,y,w,h,fontSize,color,bold=false,align='left')=>put({type:'text',x,y,w,h,fontSize,text,color,opacity:1,font:'Trebuchet MS',bold,align});
+ shape('paper',38,30,1124,126,'#235d4b');txt('MESOPITHECUS',80,39,1040,98,73,'#fffaf0',true,'center');txt('THE PREHISTORIC MONKEY',80,117,1040,44,23,'#fff0b7',true,'center');
+ shape('foam',450,181,300,273,'#b9df99','circle');put({type:'sticker',x:487,y:199,w:230,h:230,emoji:'🐒',opacity:1});
+ const cards=[['WHAT WAS IT?',35,192],['WHEN DID IT LIVE?',858,192],['WHERE DID IT LIVE?',35,370],['WHAT DID IT EAT?',858,370],['BODY FEATURES',35,557],['FUN FACT!',858,557]];
+ for(const [header,x,y] of cards){shape('paper',x,y,307,152,'#fffdf2');shape('foam',x+10,y+9,286,45,'#b9df99','rectangle');txt(header,x+20,y+15,270,36,20,'#214b3c',true);txt('Write your information here...',x+20,y+70,265,75,19,'#56665e');}
+ txt('Add a photo or draw more details!',376,483,447,44,24,'#416b53',true,'center');shape('foam',397,550,115,94,'#ffe6a0','star');shape('foam',692,554,119,91,'#f5b7a5','leaf');put({type:'sticker',x:540,y:561,w:110,h:110,emoji:'🦴',opacity:1});
+ $('orientation').value='landscape';$('boardColor').value=model.boardColor;$('boardHex').textContent=model.boardColor.toUpperCase();resizeBoard();updateProps();changed();message('🐒 Plantilla colocada. Selecciona los textos para cambiarlos.');}
+function editTextSelected(){const s=selected();if(!s||s.type!=='text')return;remember();s.text=$('textInput').value;s.font=$('fontFamily').value;s.fontSize=Number($('fontSize').value);s.h=Math.max(s.h,s.fontSize*1.5+12);render();changed();message('✅ Texto actualizado');}
+async function addImageFromFile(file){if(!file)return;if(!file.type.startsWith('image/')){alert('Selecciona una imagen válida.');return;}if(file.size>18*1024*1024){alert('La imagen es demasiado grande.');return;}const url=URL.createObjectURL(file),im=new Image();im.onload=()=>{try{const max=1400,ratio=Math.min(1,max/Math.max(im.width,im.height)),res=document.createElement('canvas');res.width=Math.round(im.width*ratio);res.height=Math.round(im.height*ratio);const g=res.getContext('2d');g.drawImage(im,0,0,res.width,res.height);const src=res.toDataURL('image/jpeg',.9);const maxW=520,maxH=400,sz=Math.min(maxW/res.width,maxH/res.height,1.5);const w=Math.round(res.width*sz),h=Math.round(res.height*sz);add({type:'image',src,x:(canvas.width-w)/2,y:(canvas.height-h)/2,w,h,opacity:1});message('📷 Foto añadida. Puedes moverla y cambiar su tamaño.');}finally{URL.revokeObjectURL(url);}};im.onerror=()=>{URL.revokeObjectURL(url);alert('No se pudo leer esa imagen.');};im.src=url;}
+function refreshLayers(){const list=$('layersList');if(!list)return;list.replaceChildren();if(!model.objects.length){const empty=document.createElement('div');empty.className='layer-empty';empty.textContent='Todavía no hay elementos.';list.append(empty);return;}model.objects.slice().reverse().forEach(o=>{const row=document.createElement('div');row.className='layer-item'+(selection===o.id?' is-current':'');const btn=document.createElement('button');btn.type='button';btn.className='layer-vis';btn.title=o.hidden?'Mostrar':'Ocultar';btn.textContent=o.hidden?'🙈':'👁️';btn.onclick=()=>{remember();o.hidden=!o.hidden;if(o.hidden&&selection===o.id)selection=null;updateProps();render();changed()};const name=document.createElement('div');name.className='layer-name';name.textContent=(o.type==='text'?'🔤 '+o.text.slice(0,27):o.type==='image'?'🖼️ Imagen':o.type==='stroke'?'✏️ Dibujo':o.type==='sticker'?'⭐ Pegatina':'✂️ '+o.type);name.onclick=()=>{selection=o.id;setTool('select');updateProps();render();refreshLayers()};row.append(btn,name);list.append(row)})}
+function init(){makeSwatches();document.querySelectorAll('[data-quick]').forEach(btn=>btn.addEventListener('click',()=>setTool(btn.dataset.quick)));try{const prev=JSON.parse(localStorage.getItem('cartulina_studio_v2')||'null');if(prev?.model?.objects&&['landscape','portrait'].includes(prev.model.orientation)){model=prev.model;nextId=Number(prev.nextId)||1;message('✨ Recuperé tu última cartulina');}}catch(e){}$('orientation').value=model.orientation;$('boardColor').value=model.boardColor;$('boardHex').textContent=model.boardColor.toUpperCase();resizeBoard();updateProps();updateButtons();
+ $('tools').addEventListener('click',e=>{const b=e.target.closest('[data-tool]');if(b)setTool(b.dataset.tool);});
+ canvas.addEventListener('pointerdown',onPointerDown);canvas.addEventListener('pointermove',onPointerMove);canvas.addEventListener('pointerup',onPointerUp);canvas.addEventListener('pointercancel',onPointerUp);
+ canvas.addEventListener('dblclick',e=>{const s=hitTop(coord(e));if(s&&s.type==='text'){selection=s.id;updateProps();$('textInput').focus();$('textInput').select();message('🔠 Cambia el texto en el panel y pulsa «Editar elegido»');}});
+ $('inkColor').addEventListener('input',e=>changeInk(e.target.value));$('boardColor').addEventListener('input',e=>changePaper(e.target.value));$('orientation').addEventListener('change',e=>setOrientation(e.target.value));
+ $('brushSize').addEventListener('input',e=>{thickness=Number(e.target.value);$('brushSizeValue').textContent=thickness;const s=selected();if(s?.size){remember();s.size=thickness;render();changed();}});
+ $('inkOpacity').addEventListener('input',e=>{opacity=Number(e.target.value)/100;$('opacityValue').textContent=e.target.value+'%';const s=selected();if(s){remember();s.opacity=opacity;render();changed();}});
+ $('foamShape').addEventListener('change',e=>foamShape=e.target.value);$('stickerSelect').addEventListener('change',e=>sticker=e.target.value);
+ $('showGrid').addEventListener('change',e=>{grid=e.target.checked;render();});
+ $('addTextBtn').addEventListener('click',()=>{setTool('text');message('🔠 Ahora toca la cartulina donde quieras poner el texto');});
+ $('addStickerBtn').addEventListener('click',()=>{setTool('sticker');message('🌿 Ahora toca la cartulina donde quieras poner la pegatina');});
+ $('updateTextBtn').addEventListener('click',editTextSelected);
+ $('fontFamily').addEventListener('change',()=>{if(selected()?.type==='text')editTextSelected();});$('fontSize').addEventListener('change',()=>{if(selected()?.type==='text')editTextSelected();});
+ $('imageInput').addEventListener('change',e=>{addImageFromFile(e.target.files[0]);e.target.value='';});
+ $('loadInput').addEventListener('change',e=>{if(e.target.files[0])loadProject(e.target.files[0]);e.target.value='';});
+ $('undoBtn').addEventListener('click',undo);$('redoBtn').addEventListener('click',redo);$('exportBtn').addEventListener('click',exportPng);
+ $('saveBtn').addEventListener('click',saveProject);$('saveBtnSide').addEventListener('click',saveProject);
+ $('templateBtn').addEventListener('click',setTemplate);$('templateBtnSide').addEventListener('click',setTemplate);
+ $('duplicateBtn').addEventListener('click',duplicate);$('deleteBtn').addEventListener('click',deleteSelected);$('frontBtn').addEventListener('click',()=>changeOrder('front'));$('backBtn').addEventListener('click',()=>changeOrder('back'));$('clearBtn').addEventListener('click',clearBoard);
+ $('zoomIn').addEventListener('click',()=>{zoom=clamp(zoom+25,50,250);resizeBoard();});$('zoomOut').addEventListener('click',()=>{zoom=clamp(zoom-25,50,250);resizeBoard();});$('zoomReset').addEventListener('click',()=>{zoom=100;resizeBoard();});
+ $('moreBtn').addEventListener('click',()=>{const choice=prompt('Opciones: escribe 1 para plantilla Mesopithecus, 2 para guardar proyecto o 3 para abrir proyecto');if(choice==='1')setTemplate();if(choice==='2')saveProject();if(choice==='3')$('loadInput').click();});
+ document.addEventListener('keydown',e=>{const editing=/INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName)||document.activeElement?.isContentEditable;if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();if(e.shiftKey)redo();else undo();}else if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();redo();}else if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'){e.preventDefault();saveProject();}else if(!editing&&(e.key==='Delete'||e.key==='Backspace')){e.preventDefault();deleteSelected();}else if(!editing&&e.key==='Escape'){selection=null;setTool('select');updateProps();render();}});
+ window.addEventListener('beforeunload',saveLocal);window.addEventListener('resize',render);render();}
+init();
+if('serviceWorker' in navigator && location.protocol==='https:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
 })();
-</script></body></html>
+</script>
+</body>
+</html>
