@@ -1,0 +1,45 @@
+name: Build Kaxtz Lab IPA (unsigned)
+on:
+  push:
+    branches: [kaxtz-lab]
+    paths:
+      - 'ios/**'
+      - '*.html'
+      - '.github/workflows/build-kaxtz-ios.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bundle offline apps
+        run: |
+          mkdir -p ios/Web
+          cp index.html drone.html zenit.html store.html ios/Web/
+      - name: Generate Xcode project
+        run: |
+          if ! command -v xcodegen >/dev/null 2>&1; then brew install xcodegen; fi
+          cd ios && xcodegen generate
+      - name: Compile iOS app
+        run: |
+          xcodebuild -project ios/KaxtzLab.xcodeproj -scheme KaxtzLab -configuration Release -sdk iphoneos -derivedDataPath ios-build CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p Payload
+          cp -R "ios-build/Build/Products/Release-iphoneos/KaxtzLab.app" Payload/
+          zip -q -r Kaxtz_Lab_unsigned.ipa Payload
+          unzip -l Kaxtz_Lab_unsigned.ipa | grep -E '(index.html|drone.html|zenit.html|store.html)'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Kaxtz-Lab-IPA-unsigned
+          path: Kaxtz_Lab_unsigned.ipa
+          if-no-files-found: error
+      - name: Publish unsigned IPA
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete kaxtz-lab-ios-v1 --yes --cleanup-tag || true
+          gh release create kaxtz-lab-ios-v1 Kaxtz_Lab_unsigned.ipa --title "Kaxtz Lab iOS unsigned" --notes "Sin firma de Apple. Requiere firmarse con un certificado de desarrollo/provisión antes de instalarse en un iPhone o iPad." --target "$GITHUB_SHA"

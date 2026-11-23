@@ -1,0 +1,24 @@
+name: KaxtzLab
+options:
+  minimumXcodeGenVersion: 2.38.0
+settings:
+  base:
+    SWIFT_VERSION: 5.9
+    IPHONEOS_DEPLOYMENT_TARGET: 15.0
+    TARGETED_DEVICE_FAMILY: "1,2"
+targets:
+  KaxtzLab:
+    type: application
+    platform: iOS
+    sources:
+      - path: Sources
+      - path: Web
+        type: folder
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.kaxtz.lab
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: "Kaxtz Lab"
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        CODE_SIGN_STYLE: Manual
+        CODE_SIGNING_ALLOWED: NO

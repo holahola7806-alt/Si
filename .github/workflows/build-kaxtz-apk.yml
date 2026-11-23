@@ -1,0 +1,42 @@
+name: Build Kaxtz Lab APK
+on:
+  push:
+    branches: [kaxtz-lab]
+    paths:
+      - 'android/**'
+      - '*.html'
+      - '.github/workflows/build-kaxtz-apk.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.10.2'
+      - name: Bundle the three offline apps
+        run: |
+          mkdir -p android/app/src/main/assets
+          cp index.html drone.html zenit.html store.html android/app/src/main/assets/
+      - name: Build APK
+        run: gradle -p android --no-daemon assembleDebug
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Kaxtz-Lab-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+      - name: Publish APK
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release delete kaxtz-lab-android-v1 --yes --cleanup-tag || true
+          gh release create kaxtz-lab-android-v1 android/app/build/outputs/apk/debug/app-debug.apk --title "Kaxtz Lab Android v1" --notes "Drone Builder 3D, Zenit Code Studio y Kaxtz App Store. APK de prueba para Android." --target "$GITHUB_SHA"
