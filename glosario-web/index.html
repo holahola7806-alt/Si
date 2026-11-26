@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#182842">
+<title>Glosario ilustrado de HTML</title>
+<style>
+  :root{color-scheme:light;--ink:#182842;--blue:#234fb0;--paper:#fffdf8;--line:#dcd9d0;--muted:#4b576a;--orange:#a33816}
+  *{box-sizing:border-box}
+  body{margin:0;background:#eeece5;color:var(--ink);font:1rem/1.55 system-ui,sans-serif}
+  a{color:var(--blue);text-underline-offset:.2em}
+  code,pre,.tab{font-family:ui-monospace,Consolas,monospace}
+  .window{max-width:70rem;margin:clamp(.65rem,4vw,3rem) auto;background:var(--paper);border:1px solid #aeb6c1;border-radius:1rem;overflow:hidden;box-shadow:0 18px 60px #18284214;width:calc(100% - clamp(1.3rem,8vw,6rem))}
+  .chrome{background:#e6ebf5;padding:.65rem .85rem 0;display:flex;align-items:center;gap:.8rem;border-bottom:1px solid #cbd2e0}
+  .dots{display:flex;gap:.3rem}
+  .dots span{width:.53rem;height:.53rem;border-radius:100%;background:#234fb0}
+  .dots span:first-child{background:#ba4a25}
+  .dots span:last-child{background:#687992}
+  .tab{background:var(--paper);padding:.35rem .75rem;border-radius:.45rem .45rem 0 0;font-size:.79rem}
+  .hero{padding:clamp(2rem,6vw,4.5rem) clamp(1.1rem,5vw,4rem);background:linear-gradient(120deg,#fffdf8 48%,#e8eefb);border-bottom:1px solid var(--line)}
+  .subject{margin:0;color:var(--blue);font-size:.8rem;font-weight:750;text-transform:uppercase;letter-spacing:.13em}
+  h1{margin:.45rem 0 .6rem;font:700 clamp(2.2rem,6vw,5rem)/1.05 Georgia,serif;letter-spacing:-.045em}
+  h1 code{color:var(--orange);font-size:.9em;letter-spacing:-.08em}
+  .author{margin:.6rem 0 1.2rem;color:var(--muted)}
+  nav{display:flex;flex-wrap:wrap;gap:.55rem 1rem}
+  nav a{font-weight:700;font-size:.88rem}
+  main{padding:clamp(1.15rem,5vw,4rem)}
+  .columns{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.4rem,5vw,3rem)}
+  h2{font:700 clamp(1.4rem,3vw,1.9rem)/1.15 Georgia,serif;margin:0 0 .8rem}
+  dl{margin:0}
+  .term{border-top:1px solid var(--line);padding:.58rem 0;display:grid;grid-template-columns:minmax(6.3rem,auto) 1fr;gap:.75rem;align-items:baseline}
+  dt code{color:var(--blue);font-size:.85em;font-weight:750;white-space:nowrap}
+  dd{margin:0}
+  .closing{margin:2rem 0;padding:1rem 1.2rem;background:#ecf0f8;border-radius:.6rem}
+  .closing p{margin:.35rem 0 .6rem}
+  pre{margin:.5rem 0 0;white-space:pre-wrap;color:var(--blue);font-size:.95rem}
+  .examples{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10.8rem),1fr));gap:.65rem}
+  figure{margin:0;border:1px solid var(--line);border-radius:.6rem;overflow:hidden;background:white;min-width:0}
+  figcaption{padding:.5rem .65rem;background:#eef2fb;color:var(--blue);font-weight:700;font-size:.88rem}
+  .example{padding:.65rem .8rem;font-size:.87rem}
+  .example p{margin:0}
+  .example ol,.example ul{margin:0;padding-left:1.25rem}
+  .demo-title,.demo-section,.demo-subsection{display:block;line-height:1.35}
+  .demo-title{font-size:1.4rem}.demo-section{font-size:1rem}.demo-subsection{font-size:.76rem}
+  .demo-tab{display:block;border-bottom:1px solid #cbd2e0;padding-bottom:.3rem;margin-bottom:.3rem;color:var(--blue)}
+  @media(max-width:46rem){.columns{grid-template-columns:1fr}}
+  @media(max-width:24rem){.term{grid-template-columns:1fr;gap:.05rem}}
+</style>
+</head>
+<body>
+<div class="window">
+  <div class="chrome" aria-hidden="true"><span class="dots"><span></span><span></span><span></span></span><span class="tab">glosario.html</span></div>
+  <header class="hero">
+    <p class="subject">Proyecto de Tecnología</p>
+    <h1>Glosario ilustrado<br>de <code>&lt;HTML&gt;</code></h1>
+    <p class="author">Por <strong>__AUTOR__</strong></p>
+    <nav aria-label="Contenido"><a href="#estructura">Estructura</a><a href="#contenido">Etiquetas de contenido</a><a href="#cierre">Cierre</a><a href="#ejemplos">Ejemplos ilustrados</a></nav>
+  </header>
+  <main>
+    <div class="columns">
+      <section id="estructura">
+        <h2>Estructura de una página</h2>
+        <dl>
+          <div class="term"><dt><code>&lt;!DOCTYPE html&gt;</code></dt><dd>Indica al navegador que use el modo estándar de HTML.</dd></div>
+          <div class="term"><dt><code>&lt;html&gt;</code></dt><dd>Contiene el encabezado y el cuerpo del documento.</dd></div>
+          <div class="term"><dt><code>&lt;head&gt;</code></dt><dd>Guarda información sobre la página, como el título de la pestaña.</dd></div>
+          <div class="term"><dt><code>&lt;body&gt;</code></dt><dd>Contiene lo que se muestra en la página.</dd></div>
+        </dl>
+      </section>
+      <section id="contenido">
+        <h2>Títulos, párrafos y listas</h2>
+        <dl>
+          <div class="term"><dt><code>&lt;h1&gt;</code></dt><dd>Marca el título principal.</dd></div>
+          <div class="term"><dt><code>&lt;h2&gt;</code></dt><dd>Marca un subtítulo dentro del tema principal.</dd></div>
+          <div class="term"><dt><code>&lt;h3&gt;</code></dt><dd>Marca un subtítulo dentro de una sección de segundo nivel.</dd></div>
+          <div class="term"><dt><code>&lt;p&gt;</code></dt><dd>Agrupa el texto de un párrafo.</dd></div>
+          <div class="term"><dt><code>&lt;ul&gt;</code></dt><dd>Crea una lista con viñetas.</dd></div>
+          <div class="term"><dt><code>&lt;ol&gt;</code></dt><dd>Crea una lista ordenada, normalmente numerada.</dd></div>
+          <div class="term"><dt><code>&lt;li&gt;</code></dt><dd>Marca cada elemento de una lista.</dd></div>
+        </dl>
+      </section>
+    </div>
+    <section id="cierre" class="closing">
+      <h2>Etiqueta de cierre</h2>
+      <p>La diagonal <code>/</code> va justo después de <code>&lt;</code> e indica dónde termina el elemento.</p>
+      <pre><code>&lt;h1&gt;Mi título&lt;/h1&gt;</code></pre>
+    </section>
+    <section id="ejemplos">
+      <h2>Cinco ejemplos ilustrados</h2>
+      <div class="examples">
+        <figure><figcaption><code>&lt;h1&gt; &lt;h2&gt; &lt;h3&gt;</code></figcaption><div class="example"><b class="demo-title">Animales</b><b class="demo-section">Mamíferos</b><b class="demo-subsection">Mamíferos marinos</b></div></figure>
+        <figure><figcaption><code>&lt;p&gt;</code></figcaption><div class="example"><p>Los delfines viven en el agua y respiran aire.</p></div></figure>
+        <figure><figcaption><code>&lt;ul&gt;</code> y <code>&lt;li&gt;</code></figcaption><div class="example"><ul><li>Delfín</li><li>Ballena</li><li>Foca</li></ul></div></figure>
+        <figure><figcaption><code>&lt;ol&gt;</code> y <code>&lt;li&gt;</code></figcaption><div class="example"><ol><li>Observar</li><li>Anotar</li><li>Dibujar</li></ol></div></figure>
+        <figure><figcaption><code>&lt;head&gt;</code> y <code>&lt;body&gt;</code></figcaption><div class="example"><b class="demo-tab">Pestaña: Animales</b><p>Contenido de la página</p></div></figure>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>
